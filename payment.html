@@ -1,0 +1,1228 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Payment | SalonEase</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap"
+          rel="stylesheet">
+
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+
+    <style>
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: "Poppins", sans-serif;
+        }
+
+        body {
+            background: #f5f6fa;
+            color: #2d2d3a;
+        }
+
+        /* ================= NAVBAR ================= */
+
+        nav {
+            height: 75px;
+            background: white;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 7%;
+            box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+        }
+
+        .logo {
+            font-size: 25px;
+            font-weight: 700;
+            color: #6c63ff;
+            text-decoration: none;
+        }
+
+        .logo i {
+            margin-right: 8px;
+        }
+
+        .nav-links {
+            display: flex;
+            align-items: center;
+            gap: 28px;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: #555;
+            font-size: 14px;
+            font-weight: 500;
+        }
+
+        .nav-links a:hover {
+            color: #6c63ff;
+        }
+
+        .profile-btn {
+            background: #6c63ff;
+            color: white !important;
+            padding: 10px 18px;
+            border-radius: 8px;
+        }
+
+        /* ================= PAGE ================= */
+
+        .page {
+            padding: 45px 7%;
+            max-width: 1100px;
+            margin: auto;
+        }
+
+        .back-link {
+            display: inline-block;
+            margin-bottom: 20px;
+            text-decoration: none;
+            color: #6c63ff;
+            font-size: 13px;
+            font-weight: 500;
+        }
+
+        .back-link i {
+            margin-right: 5px;
+        }
+
+        .page-header {
+            margin-bottom: 30px;
+        }
+
+        .page-header h1 {
+            font-size: 30px;
+            margin-bottom: 6px;
+        }
+
+        .page-header p {
+            color: #777;
+            font-size: 14px;
+        }
+
+        /* ================= MAIN ================= */
+
+        .payment-container {
+            display: grid;
+            grid-template-columns: 1.6fr 1fr;
+            gap: 30px;
+        }
+
+        .payment-card,
+        .order-card {
+            background: white;
+            border-radius: 16px;
+            padding: 30px;
+            box-shadow: 0 5px 25px rgba(0,0,0,0.06);
+        }
+
+        .card-title {
+            font-size: 19px;
+            font-weight: 600;
+            margin-bottom: 25px;
+        }
+
+        /* ================= PAYMENT METHODS ================= */
+
+        .payment-methods {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 12px;
+            margin-bottom: 25px;
+        }
+
+        .method {
+            border: 1px solid #ddd;
+            border-radius: 10px;
+            padding: 15px 10px;
+            text-align: center;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+
+        .method:hover {
+            border-color: #6c63ff;
+        }
+
+        .method.active {
+            border: 2px solid #6c63ff;
+            background: #f7f6ff;
+            color: #6c63ff;
+        }
+
+        .method i {
+            display: block;
+            font-size: 21px;
+            margin-bottom: 7px;
+        }
+
+        .method span {
+            font-size: 12px;
+            font-weight: 500;
+        }
+
+        /* ================= FORM ================= */
+
+        .form-group {
+            margin-bottom: 18px;
+        }
+
+        .form-group label {
+            display: block;
+            font-size: 13px;
+            font-weight: 500;
+            margin-bottom: 8px;
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 13px 14px;
+            border: 1px solid #ddd;
+            border-radius: 9px;
+            outline: none;
+            font-size: 13px;
+            color: #444;
+        }
+
+        .form-control:focus {
+            border-color: #6c63ff;
+            box-shadow: 0 0 0 3px rgba(108,99,255,0.1);
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+        }
+
+        /* ================= UPI ================= */
+
+        .upi-section {
+            display: none;
+        }
+
+        .upi-section.active {
+            display: block;
+        }
+
+        .upi-info {
+            background: #f7f6ff;
+            border-radius: 10px;
+            padding: 15px;
+            margin-bottom: 18px;
+            color: #666;
+            font-size: 12px;
+        }
+
+        /* ================= CASH ================= */
+
+        .cash-section {
+            display: none;
+        }
+
+        .cash-section.active {
+            display: block;
+        }
+
+        .cash-info {
+            background: #f7f6ff;
+            padding: 18px;
+            border-radius: 10px;
+            font-size: 13px;
+            color: #666;
+            line-height: 1.7;
+        }
+
+        /* ================= PAY BUTTON ================= */
+
+        .pay-btn {
+            width: 100%;
+            border: none;
+            background: #6c63ff;
+            color: white;
+            padding: 14px;
+            border-radius: 9px;
+            font-size: 15px;
+            font-weight: 600;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+
+        .pay-btn:hover {
+            background: #5951e8;
+        }
+
+        /* ================= ORDER SUMMARY ================= */
+
+        .order-card {
+            height: fit-content;
+        }
+
+        .service-box {
+            background: #f7f6ff;
+            border-radius: 12px;
+            padding: 18px;
+            margin-bottom: 20px;
+        }
+
+        .service-box h3 {
+            font-size: 16px;
+            margin-bottom: 5px;
+        }
+
+        .service-box p {
+            color: #777;
+            font-size: 11px;
+        }
+
+        .summary-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 12px 0;
+            border-bottom: 1px solid #eee;
+            font-size: 13px;
+        }
+
+        .summary-row span:first-child {
+            color: #777;
+        }
+
+        .total-row {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 20px;
+            font-size: 19px;
+            font-weight: 700;
+        }
+
+        .total-row span:last-child {
+            color: #6c63ff;
+        }
+
+        .secure {
+            margin-top: 20px;
+            padding: 12px;
+            background: #f7f7f8;
+            border-radius: 8px;
+            color: #777;
+            font-size: 10px;
+            text-align: center;
+        }
+
+        .secure i {
+            color: #6c63ff;
+            margin-right: 5px;
+        }
+
+        /* ================= RESPONSIVE ================= */
+
+        @media (max-width: 800px) {
+
+            .payment-container {
+                grid-template-columns: 1fr;
+            }
+
+        }
+
+        @media (max-width: 600px) {
+
+            nav {
+                padding: 0 5%;
+            }
+
+            .nav-links a:not(.profile-btn) {
+                display: none;
+            }
+
+            .page {
+                padding: 30px 5%;
+            }
+
+            .payment-card,
+            .order-card {
+                padding: 20px;
+            }
+
+            .payment-methods {
+                grid-template-columns: 1fr;
+            }
+
+            .form-row {
+                grid-template-columns: 1fr;
+            }
+
+        }
+
+    </style>
+</head>
+
+<body>
+
+<!-- ================= NAVBAR ================= -->
+
+<nav>
+
+    <a href="index.html" class="logo">
+        <i class="fa-solid fa-scissors"></i>
+        SalonEase
+    </a>
+
+    <div class="nav-links">
+
+        <a href="dashboard.html">
+            Dashboard
+        </a>
+
+        <a href="services.html">
+            Services
+        </a>
+
+        <a href="bookings.html">
+            My Bookings
+        </a>
+
+        <a href="profile.html" class="profile-btn">
+            <i class="fa-solid fa-user"></i>
+            Profile
+        </a>
+
+    </div>
+
+</nav>
+
+
+<!-- ================= PAGE ================= -->
+
+<div class="page">
+
+    <a href="bookings.html" class="back-link">
+        <i class="fa-solid fa-arrow-left"></i>
+        Back to Bookings
+    </a>
+
+    <div class="page-header">
+
+        <h1>Complete Payment</h1>
+
+        <p>
+            Choose your preferred payment method to confirm your appointment.
+        </p>
+
+    </div>
+
+
+    <div class="payment-container">
+
+
+        <!-- ================= PAYMENT CARD ================= -->
+
+        <div class="payment-card">
+
+            <h2 class="card-title">
+                Payment Method
+            </h2>
+
+
+            <!-- METHODS -->
+
+            <div class="payment-methods">
+
+                <div class="method active"
+                     data-method="card">
+
+                    <i class="fa-regular fa-credit-card"></i>
+
+                    <span>Card</span>
+
+                </div>
+
+
+                <div class="method"
+                     data-method="upi">
+
+                    <i class="fa-solid fa-mobile-screen-button"></i>
+
+                    <span>UPI</span>
+
+                </div>
+
+
+                <div class="method"
+                     data-method="cash">
+
+                    <i class="fa-solid fa-money-bill"></i>
+
+                    <span>Pay at Salon</span>
+
+                </div>
+
+            </div>
+
+
+            <!-- ================= CARD FORM ================= -->
+
+            <form id="paymentForm">
+
+                <div id="cardSection">
+
+                    <div class="form-group">
+
+                        <label>
+                            Cardholder Name
+                        </label>
+
+                        <input type="text"
+                               id="cardName"
+                               class="form-control"
+                               placeholder="Enter cardholder name">
+
+                    </div>
+
+
+                    <div class="form-group">
+
+                        <label>
+                            Card Number
+                        </label>
+
+                        <input type="text"
+                               id="cardNumber"
+                               class="form-control"
+                               placeholder="1234 5678 9012 3456"
+                               maxlength="19">
+
+                    </div>
+
+
+                    <div class="form-row">
+
+                        <div class="form-group">
+
+                            <label>
+                                Expiry Date
+                            </label>
+
+                            <input type="text"
+                                   id="expiry"
+                                   class="form-control"
+                                   placeholder="MM/YY"
+                                   maxlength="5">
+
+                        </div>
+
+
+                        <div class="form-group">
+
+                            <label>
+                                CVV
+                            </label>
+
+                            <input type="password"
+                                   id="cvv"
+                                   class="form-control"
+                                   placeholder="•••"
+                                   maxlength="3">
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <!-- ================= UPI ================= -->
+
+                <div id="upiSection"
+                     class="upi-section">
+
+                    <div class="upi-info">
+
+                        <i class="fa-solid fa-circle-info"></i>
+
+                        Enter your UPI ID. You will be redirected to your
+                        UPI application after confirmation.
+
+                    </div>
+
+
+                    <div class="form-group">
+
+                        <label>
+                            UPI ID
+                        </label>
+
+                        <input type="text"
+                               id="upiId"
+                               class="form-control"
+                               placeholder="example@upi">
+
+                    </div>
+
+                </div>
+
+
+                <!-- ================= CASH ================= -->
+
+                <div id="cashSection"
+                     class="cash-section">
+
+                    <div class="cash-info">
+
+                        <i class="fa-solid fa-circle-info"></i>
+
+                        You can pay the appointment amount directly
+                        at the salon after receiving your service.
+
+                        <br><br>
+
+                        Your appointment will be marked as
+                        <strong>Payment Pending</strong> until the
+                        payment is received.
+
+                    </div>
+
+                </div>
+
+
+                <button type="submit"
+                        class="pay-btn"
+                        id="payButton">
+
+                    <i class="fa-solid fa-lock"></i>
+                    Pay ₹900
+
+                </button>
+
+            </form>
+
+        </div>
+
+
+       <!-- ================= SUMMARY ================= -->
+
+<div class="order-card">
+
+    <h2 class="card-title">
+        Appointment Summary
+    </h2>
+
+
+    <div class="service-box">
+
+        <h3 id="summaryService">
+            Loading...
+        </h3>
+
+        <p id="summaryServiceDetails">
+            Loading appointment details...
+        </p>
+
+    </div>
+
+
+    <div class="summary-row">
+
+        <span>
+            Appointment ID
+        </span>
+
+        <span id="summaryAppointmentId">
+            --
+        </span>
+
+    </div>
+
+
+    <div class="summary-row">
+
+        <span>
+            Stylist
+        </span>
+
+        <span id="summaryStylist">
+            --
+        </span>
+
+    </div>
+
+
+    <div class="summary-row">
+
+        <span>
+            Date
+        </span>
+
+        <span id="summaryDate">
+            --
+        </span>
+
+    </div>
+
+
+    <div class="summary-row">
+
+        <span>
+            Time
+        </span>
+
+        <span id="summaryTime">
+            --
+        </span>
+
+    </div>
+
+
+    <div class="summary-row">
+
+        <span>
+            Service Amount
+        </span>
+
+        <span id="summaryAmount">
+            ₹0
+        </span>
+
+    </div>
+
+
+    <div class="total-row">
+
+        <span>
+            Total
+        </span>
+
+        <span id="summaryTotal">
+            ₹0
+        </span>
+
+    </div>
+
+
+    <div class="secure">
+
+        <i class="fa-solid fa-shield-halved"></i>
+
+        Secure payment · SalonEase
+
+    </div>
+
+</div>
+
+
+<!-- ================= JAVASCRIPT ================= -->
+
+<script>
+
+    /* ================= GET APPOINTMENT ================= */
+
+    const urlParams =
+        new URLSearchParams(window.location.search);
+
+    const appointmentId =
+        urlParams.get("appointment");
+
+
+    if (!appointmentId) {
+
+        alert("No appointment selected for payment.");
+
+        window.location.href = "bookings.html";
+
+    }
+
+
+    /* ================= ELEMENTS ================= */
+
+    const methods =
+        document.querySelectorAll(".method");
+
+    const cardSection =
+        document.getElementById("cardSection");
+
+    const upiSection =
+        document.getElementById("upiSection");
+
+    const cashSection =
+        document.getElementById("cashSection");
+
+    const payButton =
+        document.getElementById("payButton");
+
+
+    let selectedMethod = "card";
+
+    let appointmentAmount = 0;
+
+    /* ================= LOAD APPOINTMENT ================= */
+
+    async function loadAppointment() {
+
+    try {
+
+        const response = await fetch(
+            `/api/appointments/${appointmentId}`
+        );
+
+        const data = await response.json();
+
+
+        if (!data.success) {
+
+            alert(data.message);
+
+            window.location.href =
+                "bookings.html";
+
+            return;
+
+        }
+
+
+        /* ================= GET AMOUNT ================= */
+
+        appointmentAmount =
+            Number(data.appointment.amount);
+
+
+        console.log(
+            "Appointment amount:",
+            appointmentAmount
+        );
+
+
+        /* ================= UPDATE SUMMARY ================= */
+
+        document.getElementById("summaryService").textContent =
+            data.appointment.service_name;
+
+
+        document.getElementById("summaryServiceDetails").textContent =
+            data.appointment.duration +
+            " minutes · " +
+            data.appointment.specialization;
+
+
+        document.getElementById("summaryAppointmentId").textContent =
+            "APT" +
+            data.appointment.appointment_id;
+
+
+        document.getElementById("summaryStylist").textContent =
+            data.appointment.employee_name;
+
+
+        /* ================= FORMAT DATE ================= */
+
+        const dateParts =
+            String(data.appointment.appointment_date)
+                .substring(0, 10)
+                .split("-");
+
+
+        const formattedDate =
+            new Date(
+                Number(dateParts[0]),
+                Number(dateParts[1]) - 1,
+                Number(dateParts[2])
+            ).toLocaleDateString("en-IN", {
+                day: "2-digit",
+                month: "short",
+                year: "numeric"
+            });
+
+
+        document.getElementById("summaryDate").textContent =
+            formattedDate;
+
+
+        /* ================= FORMAT TIME ================= */
+
+        const timeParts =
+            String(data.appointment.appointment_time)
+                .substring(0, 5)
+                .split(":");
+
+
+        const formattedTime =
+            new Date(
+                2000,
+                0,
+                1,
+                Number(timeParts[0]),
+                Number(timeParts[1])
+            ).toLocaleTimeString("en-IN", {
+                hour: "2-digit",
+                minute: "2-digit",
+                hour12: true
+            });
+
+
+        document.getElementById("summaryTime").textContent =
+            formattedTime;
+
+
+        /* ================= UPDATE AMOUNT ================= */
+
+        document.getElementById("summaryAmount").textContent =
+            "₹" + appointmentAmount.toFixed(0);
+
+
+        document.getElementById("summaryTotal").textContent =
+            "₹" + appointmentAmount.toFixed(0);
+
+
+        /* ================= UPDATE PAYMENT BUTTON ================= */
+
+        updatePaymentAmount();
+
+
+    } catch (error) {
+
+        console.error(
+            "Appointment loading error:",
+            error
+        );
+
+        alert(
+            "Unable to load appointment details."
+        );
+
+        window.location.href =
+            "bookings.html";
+
+    }
+
+}
+
+
+    /* ================= UPDATE PAYMENT AMOUNT ================= */
+
+    function updatePaymentAmount() {
+
+        if (selectedMethod === "cash") {
+
+            payButton.innerHTML =
+                '<i class="fa-solid fa-calendar-check"></i> Confirm Appointment';
+
+        } else {
+
+            payButton.innerHTML =
+                '<i class="fa-solid fa-lock"></i> Pay ₹' +
+                appointmentAmount.toFixed(0);
+
+        }
+
+    }
+
+
+    /* ================= PAYMENT METHOD ================= */
+
+    methods.forEach(function(method) {
+
+        method.addEventListener("click", function() {
+
+            methods.forEach(function(item) {
+
+                item.classList.remove("active");
+
+            });
+
+
+            this.classList.add("active");
+
+            selectedMethod =
+                this.dataset.method;
+
+
+            cardSection.style.display = "none";
+
+            upiSection.style.display = "none";
+
+            cashSection.style.display = "none";
+
+
+            if (selectedMethod === "card") {
+
+                cardSection.style.display = "block";
+
+            }
+
+            else if (selectedMethod === "upi") {
+
+                upiSection.style.display = "block";
+
+            }
+
+            else if (selectedMethod === "cash") {
+
+                cashSection.style.display = "block";
+
+            }
+
+
+            updatePaymentAmount();
+
+        });
+
+    });
+
+
+    /* ================= CARD NUMBER ================= */
+
+    const cardNumber =
+        document.getElementById("cardNumber");
+
+    if (cardNumber) {
+
+        cardNumber.addEventListener(
+            "input",
+            function() {
+
+                let value =
+                    this.value.replace(/\D/g, "");
+
+                value =
+                    value.substring(0, 16);
+
+                let formatted =
+                    value.match(/.{1,4}/g);
+
+                this.value =
+                    formatted
+                        ? formatted.join(" ")
+                        : "";
+
+            }
+        );
+
+    }
+
+
+    /* ================= EXPIRY ================= */
+
+    const expiry =
+        document.getElementById("expiry");
+
+    if (expiry) {
+
+        expiry.addEventListener(
+            "input",
+            function() {
+
+                let value =
+                    this.value.replace(/\D/g, "");
+
+                value =
+                    value.substring(0, 4);
+
+                if (value.length >= 3) {
+
+                    value =
+                        value.substring(0, 2) +
+                        "/" +
+                        value.substring(2);
+
+                }
+
+                this.value = value;
+
+            }
+        );
+
+    }
+
+
+    /* ================= PAYMENT SUBMIT ================= */
+
+    document.getElementById("paymentForm")
+        .addEventListener(
+            "submit",
+            async function(event) {
+
+                event.preventDefault();
+
+
+                /* ---------- CARD ---------- */
+
+                if (selectedMethod === "card") {
+
+                    const name =
+                        document.getElementById("cardName")
+                            .value.trim();
+
+                    const card =
+                        document.getElementById("cardNumber")
+                            .value.trim();
+
+                    const expiryValue =
+                        document.getElementById("expiry")
+                            .value.trim();
+
+                    const cvv =
+                        document.getElementById("cvv")
+                            .value.trim();
+
+
+                    if (
+                        !name ||
+                        !card ||
+                        !expiryValue ||
+                        !cvv
+                    ) {
+
+                        alert(
+                            "Please fill in all card details."
+                        );
+
+                        return;
+
+                    }
+
+                }
+
+
+                /* ---------- UPI ---------- */
+
+                if (selectedMethod === "upi") {
+
+                    const upi =
+                        document.getElementById("upiId")
+                            .value.trim();
+
+
+                    if (!upi) {
+
+                        alert(
+                            "Please enter your UPI ID."
+                        );
+
+                        return;
+
+                    }
+
+                }
+
+
+                /* ---------- DISABLE BUTTON ---------- */
+
+                payButton.disabled = true;
+
+                payButton.innerHTML =
+                    '<i class="fa-solid fa-spinner fa-spin"></i> Processing...';
+
+
+                try {
+
+                    const response =
+                        await fetch(
+                            "/api/payments",
+                            {
+                                method: "POST",
+
+                                headers: {
+                                    "Content-Type":
+                                        "application/json"
+                                },
+
+                                body: JSON.stringify({
+
+                                    appointmentId:
+                                        Number(appointmentId),
+
+                                    paymentMethod:
+                                        selectedMethod === "cash"
+                                            ? "Pay at Salon"
+                                            : selectedMethod === "upi"
+                                                ? "UPI"
+                                                : "Card"
+
+                                })
+                            }
+                        );
+
+
+                    const data =
+                        await response.json();
+
+
+                    if (!data.success) {
+
+                        alert(data.message);
+
+                        payButton.disabled =
+                            false;
+
+                        updatePaymentAmount();
+
+                        return;
+
+                    }
+
+
+                    /* ---------- SUCCESS ---------- */
+
+                    alert(
+                        "Payment Successful!\n\n" +
+
+                        "Appointment #" +
+                        data.payment.appointment_id +
+
+                        "\nAmount: ₹" +
+                        Number(
+                            data.payment.amount
+                        ).toFixed(0) +
+
+                        "\nPayment Method: " +
+                        data.payment.payment_method +
+
+                        "\n\nYour appointment has been confirmed."
+                    );
+
+
+                    window.location.href =
+                        "bookings.html";
+
+
+                } catch (error) {
+
+                    console.error(
+                        "Payment error:",
+                        error
+                    );
+
+
+                    alert(
+                        "Unable to connect to the SalonEase server."
+                    );
+
+
+                    payButton.disabled =
+                        false;
+
+                    updatePaymentAmount();
+
+                }
+
+            }
+        );
+
+
+    /* ================= START ================= */
+
+    loadAppointment();
+
+</script>
+
+</body>
+</html>

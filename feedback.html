@@ -1,0 +1,752 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Feedback | SalonEase</title>
+
+    <!-- Google Font -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <link
+        href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet"
+    >
+
+    <!-- Font Awesome -->
+    <link
+        rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+    >
+
+    <style>
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: "Poppins", sans-serif;
+        }
+
+        body {
+            background: #f5f6fa;
+            color: #333;
+        }
+
+        /* ================= NAVBAR ================= */
+
+        .navbar {
+            height: 70px;
+            background: white;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 7%;
+            box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+        }
+
+        .logo {
+            font-size: 25px;
+            font-weight: 700;
+            color: #6c63ff;
+            text-decoration: none;
+        }
+
+        .logo span {
+            color: #333;
+        }
+
+        .nav-links {
+            display: flex;
+            align-items: center;
+            gap: 28px;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: #555;
+            font-size: 14px;
+            font-weight: 500;
+        }
+
+        .nav-links a:hover {
+            color: #6c63ff;
+        }
+
+        .profile-btn {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: #6c63ff;
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* ================= PAGE ================= */
+
+        .page {
+            padding: 45px 7%;
+        }
+
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            color: #6c63ff;
+            text-decoration: none;
+            font-size: 14px;
+            margin-bottom: 25px;
+            font-weight: 500;
+        }
+
+        .page-header {
+            text-align: center;
+            margin-bottom: 35px;
+        }
+
+        .page-header h1 {
+            font-size: 32px;
+            margin-bottom: 8px;
+            color: #222;
+        }
+
+        .page-header p {
+            color: #777;
+            font-size: 14px;
+        }
+
+        /* ================= FEEDBACK CARD ================= */
+
+        .feedback-container {
+            max-width: 750px;
+            margin: auto;
+            background: white;
+            border-radius: 18px;
+            padding: 35px;
+            box-shadow: 0 8px 30px rgba(0,0,0,0.07);
+        }
+
+        .appointment-box {
+            background: #f7f6ff;
+            border-radius: 14px;
+            padding: 20px;
+            margin-bottom: 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .appointment-info h3 {
+            font-size: 17px;
+            color: #222;
+            margin-bottom: 5px;
+        }
+
+        .appointment-info p {
+            color: #777;
+            font-size: 13px;
+        }
+
+        .appointment-price {
+            font-size: 20px;
+            font-weight: 700;
+            color: #6c63ff;
+        }
+
+        /* ================= FORM ================= */
+
+        .form-group {
+            margin-bottom: 25px;
+        }
+
+        .form-group label {
+            display: block;
+            font-size: 14px;
+            font-weight: 600;
+            margin-bottom: 10px;
+            color: #333;
+        }
+
+        .form-group input,
+        .form-group textarea,
+        .form-group select {
+            width: 100%;
+            border: 1px solid #ddd;
+            border-radius: 10px;
+            padding: 13px 15px;
+            outline: none;
+            font-size: 14px;
+            transition: 0.3s;
+        }
+
+        .form-group input:focus,
+        .form-group textarea:focus,
+        .form-group select:focus {
+            border-color: #6c63ff;
+            box-shadow: 0 0 0 3px rgba(108,99,255,0.1);
+        }
+
+        textarea {
+            min-height: 130px;
+            resize: vertical;
+        }
+
+        /* ================= STAR RATING ================= */
+
+        .rating {
+            display: flex;
+            flex-direction: row-reverse;
+            justify-content: flex-end;
+            gap: 7px;
+        }
+
+        .rating input {
+            display: none;
+        }
+
+        .rating label {
+            font-size: 38px;
+            color: #ddd;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+
+        .rating label:hover,
+        .rating label:hover ~ label,
+        .rating input:checked ~ label {
+            color: #ffc107;
+        }
+
+        .rating-text {
+            margin-top: 8px;
+            font-size: 13px;
+            color: #777;
+        }
+
+        /* ================= SUBMIT ================= */
+
+        .submit-btn {
+            width: 100%;
+            border: none;
+            padding: 14px;
+            border-radius: 10px;
+            background: #6c63ff;
+            color: white;
+            font-size: 15px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        .submit-btn:hover {
+            background: #584ff0;
+            transform: translateY(-1px);
+        }
+
+        /* ================= NOTE ================= */
+
+        .note {
+            margin-top: 18px;
+            text-align: center;
+            font-size: 12px;
+            color: #999;
+        }
+
+        /* ================= RESPONSIVE ================= */
+
+        @media (max-width: 700px) {
+
+            .navbar {
+                padding: 0 5%;
+            }
+
+            .nav-links {
+                gap: 12px;
+            }
+
+            .nav-links a {
+                display: none;
+            }
+
+            .page {
+                padding: 30px 5%;
+            }
+
+            .feedback-container {
+                padding: 25px 20px;
+            }
+
+            .appointment-box {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 12px;
+            }
+
+            .page-header h1 {
+                font-size: 26px;
+            }
+
+        }
+
+    </style>
+</head>
+
+<body>
+
+    <!-- ================= NAVBAR ================= -->
+
+    <nav class="navbar">
+
+        <a href="index.html" class="logo">
+            Salon<span>Ease</span>
+        </a>
+
+        <div class="nav-links">
+
+            <a href="dashboard.html">
+                Dashboard
+            </a>
+
+            <a href="services.html">
+                Services
+            </a>
+
+            <a href="bookings.html">
+                My Bookings
+            </a>
+
+            <a href="login.html">
+                Logout
+            </a>
+
+            <div class="profile-btn">
+                <i class="fa-solid fa-user"></i>
+            </div>
+
+        </div>
+
+    </nav>
+
+
+    <!-- ================= PAGE ================= -->
+
+    <main class="page">
+
+        <a href="bookings.html" class="back-link">
+            <i class="fa-solid fa-arrow-left"></i>
+            Back to My Bookings
+        </a>
+
+
+        <div class="page-header">
+
+            <h1>Share Your Experience</h1>
+
+            <p>
+                Your feedback helps us improve our services.
+            </p>
+
+        </div>
+
+
+        <!-- ================= FEEDBACK FORM ================= -->
+
+        <div class="feedback-container">
+
+
+            <!-- APPOINTMENT -->
+
+            <div class="appointment-box">
+
+                <div class="appointment-info">
+
+                    <h3>
+                        <i class="fa-solid fa-spa"></i>
+                        Hair Spa
+                    </h3>
+
+                    <p>
+                        Appointment #APT1025
+                        &nbsp; • &nbsp;
+                        Anjali
+                        &nbsp; • &nbsp;
+                        08 October 2026
+                    </p>
+
+                </div>
+
+                <div class="appointment-price">
+                    ₹900
+                </div>
+
+            </div>
+
+
+            <form id="feedbackForm">
+
+
+                <!-- RATING -->
+
+                <div class="form-group">
+
+                    <label>
+                        How would you rate your experience?
+                    </label>
+
+                    <div class="rating">
+
+                        <input
+                            type="radio"
+                            id="star5"
+                            name="rating"
+                            value="5"
+                        >
+
+                        <label for="star5">
+                            ★
+                        </label>
+
+
+                        <input
+                            type="radio"
+                            id="star4"
+                            name="rating"
+                            value="4"
+                        >
+
+                        <label for="star4">
+                            ★
+                        </label>
+
+
+                        <input
+                            type="radio"
+                            id="star3"
+                            name="rating"
+                            value="3"
+                        >
+
+                        <label for="star3">
+                            ★
+                        </label>
+
+
+                        <input
+                            type="radio"
+                            id="star2"
+                            name="rating"
+                            value="2"
+                        >
+
+                        <label for="star2">
+                            ★
+                        </label>
+
+
+                        <input
+                            type="radio"
+                            id="star1"
+                            name="rating"
+                            value="1"
+                        >
+
+                        <label for="star1">
+                            ★
+                        </label>
+
+                    </div>
+
+                    <div class="rating-text">
+                        Select a rating from 1 to 5 stars.
+                    </div>
+
+                </div>
+
+
+                <!-- CATEGORY -->
+
+                <div class="form-group">
+
+                    <label for="category">
+                        What would you like to comment on?
+                    </label>
+
+                    <select id="category">
+
+                        <option value="">
+                            Select an option
+                        </option>
+
+                        <option value="service">
+                            Service Quality
+                        </option>
+
+                        <option value="staff">
+                            Staff / Stylist
+                        </option>
+
+                        <option value="cleanliness">
+                            Salon Cleanliness
+                        </option>
+
+                        <option value="booking">
+                            Booking Experience
+                        </option>
+
+                        <option value="overall">
+                            Overall Experience
+                        </option>
+
+                    </select>
+
+                </div>
+
+
+                <!-- COMMENTS -->
+
+                <div class="form-group">
+
+                    <label for="comments">
+                        Your Feedback
+                    </label>
+
+                    <textarea
+                        id="comments"
+                        placeholder="Tell us about your experience..."
+                    ></textarea>
+
+                </div>
+
+
+                <!-- SUBMIT -->
+
+                <button
+                    type="submit"
+                    class="submit-btn"
+                >
+                    <i class="fa-solid fa-paper-plane"></i>
+                    Submit Feedback
+                </button>
+
+            </form>
+
+
+            <div class="note">
+                Your feedback will be stored in the FEEDBACK table
+                when the database backend is connected.
+            </div>
+
+        </div>
+
+    </main>
+
+
+    <!-- ================= JAVASCRIPT ================= -->
+
+   <script>
+
+    /* ================= GET APPOINTMENT ID ================= */
+
+    const urlParams =
+        new URLSearchParams(window.location.search);
+
+    const appointmentId =
+        urlParams.get("appointment");
+
+
+    if (!appointmentId) {
+
+        alert(
+            "No appointment selected for feedback."
+        );
+
+        window.location.href =
+            "bookings.html";
+
+    }
+
+
+    /* ================= FEEDBACK FORM ================= */
+
+    document
+        .getElementById("feedbackForm")
+        .addEventListener("submit", async function(event) {
+
+            event.preventDefault();
+
+
+            /* ---------- RATING ---------- */
+
+            const rating =
+                document.querySelector(
+                    'input[name="rating"]:checked'
+                );
+
+
+            /* ---------- CATEGORY ---------- */
+
+            const category =
+                document.getElementById("category").value;
+
+
+            /* ---------- COMMENTS ---------- */
+
+            const comments =
+                document
+                    .getElementById("comments")
+                    .value
+                    .trim();
+
+
+            /* ---------- VALIDATION ---------- */
+
+            if (!rating) {
+
+                alert(
+                    "Please select a rating."
+                );
+
+                return;
+
+            }
+
+
+            if (category === "") {
+
+                alert(
+                    "Please select a feedback category."
+                );
+
+                return;
+
+            }
+
+
+            if (comments === "") {
+
+                alert(
+                    "Please enter your feedback."
+                );
+
+                return;
+
+            }
+
+
+            /* ---------- COMBINE CATEGORY + COMMENT ---------- */
+
+            const finalComments =
+                "Category: " +
+                category +
+                " | " +
+                comments;
+
+
+            /* ---------- DISABLE BUTTON ---------- */
+
+            const submitButton =
+                document.querySelector(".submit-btn");
+
+
+            submitButton.disabled = true;
+
+            submitButton.innerHTML =
+                '<i class="fa-solid fa-spinner fa-spin"></i> Submitting...';
+
+
+            /* ---------- SEND TO DATABASE ---------- */
+
+            try {
+
+                const response =
+                    await fetch("/api/feedback", {
+
+                        method: "POST",
+
+                        headers: {
+                            "Content-Type":
+                                "application/json"
+                        },
+
+                        body: JSON.stringify({
+
+                            appointmentId:
+                                Number(appointmentId),
+
+                            rating:
+                                Number(rating.value),
+
+                            comments:
+                                finalComments
+
+                        })
+
+                    });
+
+
+                const data =
+                    await response.json();
+
+
+                /* ---------- ERROR ---------- */
+
+                if (!data.success) {
+
+                    alert(data.message);
+
+                    submitButton.disabled = false;
+
+                    submitButton.innerHTML =
+                        '<i class="fa-solid fa-paper-plane"></i> Submit Feedback';
+
+                    return;
+
+                }
+
+
+                /* ---------- SUCCESS ---------- */
+
+                alert(
+                    "Thank you for your feedback! ⭐\n\n" +
+                    "Your feedback has been submitted successfully.\n\n" +
+                    "Feedback ID: " +
+                    data.feedback.feedback_id
+                );
+
+
+                /* ---------- GO BACK TO BOOKINGS ---------- */
+
+                window.location.href =
+                    "bookings.html";
+
+
+            } catch (error) {
+
+                console.error(
+                    "Feedback submission error:",
+                    error
+                );
+
+
+                alert(
+                    "Unable to connect to the SalonEase server."
+                );
+
+
+                submitButton.disabled = false;
+
+                submitButton.innerHTML =
+                    '<i class="fa-solid fa-paper-plane"></i> Submit Feedback';
+
+            }
+
+        });
+
+</script>
+
+</body>
+</html>

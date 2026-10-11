@@ -1,0 +1,1784 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Services | SalonEase Admin</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <link
+        href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet"
+    >
+
+    <link
+        rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+    >
+
+    <style>
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: "Poppins", sans-serif;
+        }
+
+        body {
+            background: #f5f6fa;
+            color: #333;
+        }
+
+        /* NAVBAR */
+
+        .navbar {
+            height: 70px;
+            background: white;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 6%;
+            box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+        }
+
+        .logo {
+            font-size: 25px;
+            font-weight: 700;
+            color: #6c63ff;
+            text-decoration: none;
+        }
+
+        .logo span {
+            color: #333;
+        }
+
+        .nav-right {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .dashboard-link {
+            text-decoration: none;
+            color: #555;
+            font-size: 14px;
+        }
+
+        .dashboard-link:hover {
+            color: #6c63ff;
+        }
+
+        .admin-icon {
+            width: 40px;
+            height: 40px;
+            background: #6c63ff;
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* CONTAINER */
+
+        .container {
+            width: 88%;
+            max-width: 1400px;
+            margin: auto;
+            padding: 40px 0;
+        }
+
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            color: #6c63ff;
+            text-decoration: none;
+            font-size: 13px;
+            margin-bottom: 20px;
+        }
+
+        .page-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 25px;
+        }
+
+        .page-header h1 {
+            font-size: 28px;
+            color: #222;
+        }
+
+        .page-header p {
+            color: #888;
+            font-size: 13px;
+            margin-top: 5px;
+        }
+
+        /* BUTTON */
+
+        .add-btn {
+            border: none;
+            background: #6c63ff;
+            color: white;
+            padding: 12px 18px;
+            border-radius: 9px;
+            font-size: 13px;
+            font-weight: 600;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .add-btn:hover {
+            background: #584ff0;
+        }
+
+        /* CARD */
+
+        .card {
+            background: white;
+            border-radius: 16px;
+            padding: 25px;
+            box-shadow: 0 6px 25px rgba(0,0,0,0.06);
+        }
+
+        /* TOOLBAR */
+
+        .toolbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 22px;
+            gap: 20px;
+        }
+
+        .search-box {
+            width: 350px;
+            position: relative;
+        }
+
+        .search-box i {
+            position: absolute;
+            left: 14px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #999;
+        }
+
+        .search-box input {
+            width: 100%;
+            padding: 12px 15px 12px 40px;
+            border: 1px solid #ddd;
+            border-radius: 9px;
+            outline: none;
+            font-size: 13px;
+        }
+
+        .search-box input:focus {
+            border-color: #6c63ff;
+        }
+
+        .service-count {
+            font-size: 13px;
+            color: #777;
+        }
+
+        /* TABLE */
+
+        .table-container {
+            overflow-x: auto;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            min-width: 1050px;
+        }
+
+        th {
+            text-align: left;
+            padding: 14px 12px;
+            font-size: 12px;
+            color: #888;
+            background: #fafafa;
+            border-bottom: 1px solid #eee;
+        }
+
+        td {
+            padding: 16px 12px;
+            font-size: 13px;
+            border-bottom: 1px solid #f0f0f0;
+        }
+
+        tbody tr:hover {
+            background: #fafaff;
+        }
+
+        /* SERVICE */
+
+        .service-name {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .service-icon {
+            width: 42px;
+            height: 42px;
+            border-radius: 11px;
+            background: #eeeefc;
+            color: #6c63ff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 17px;
+        }
+
+        .service-name strong {
+            display: block;
+            color: #333;
+            font-size: 13px;
+        }
+
+        .service-name span {
+            color: #999;
+            font-size: 11px;
+        }
+
+        .price {
+            color: #6c63ff;
+            font-weight: 700;
+        }
+
+        .duration {
+            color: #666;
+        }
+
+        .status {
+            padding: 5px 10px;
+            border-radius: 20px;
+            font-size: 11px;
+            font-weight: 600;
+        }
+
+        .active {
+            background: #e8f8ef;
+            color: #21a366;
+        }
+
+        /* ACTIONS */
+
+        .actions {
+            display: flex;
+            gap: 8px;
+        }
+
+        .action-btn {
+            width: 34px;
+            height: 34px;
+            border: 1px solid #eee;
+            border-radius: 8px;
+            background: white;
+            cursor: pointer;
+            color: #666;
+        }
+
+        .action-btn:hover {
+            background: #f3f2ff;
+            color: #6c63ff;
+            border-color: #d9d6ff;
+        }
+
+        .delete-btn:hover {
+            background: #fff1f1;
+            color: #e05252;
+            border-color: #ffd5d5;
+        }
+
+        .no-results {
+            text-align: center;
+            padding: 35px;
+            color: #999;
+            display: none;
+        }
+
+        /* RESPONSIVE */
+
+        @media (max-width: 700px) {
+
+            .container {
+                width: 92%;
+            }
+
+            .page-header {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 15px;
+            }
+
+            .toolbar {
+                flex-direction: column;
+                align-items: stretch;
+            }
+
+            .search-box {
+                width: 100%;
+            }
+
+            .nav-right .dashboard-link {
+                display: none;
+            }
+        }
+
+    </style>
+</head>
+
+<body>
+
+    <!-- NAVBAR -->
+
+    <nav class="navbar">
+
+        <a href="admin.html" class="logo">
+            Salon<span>Ease</span>
+        </a>
+
+        <div class="nav-right">
+
+            <a href="admin.html" class="dashboard-link">
+                <i class="fa-solid fa-chart-line"></i>
+                Dashboard
+            </a>
+
+            <div class="admin-icon">
+                <i class="fa-solid fa-user-shield"></i>
+            </div>
+
+        </div>
+
+    </nav>
+
+
+    <!-- MAIN -->
+
+    <main class="container">
+
+        <a href="admin.html" class="back-link">
+            <i class="fa-solid fa-arrow-left"></i>
+            Back to Dashboard
+        </a>
+
+
+        <div class="page-header">
+
+            <div>
+
+                <h1>Services</h1>
+
+                <p>
+                    Manage salon services, prices and durations.
+                </p>
+
+            </div>
+
+            <button
+                class="add-btn"
+                onclick="addService()"
+            >
+                <i class="fa-solid fa-plus"></i>
+                Add Service
+            </button>
+
+        </div>
+
+
+        <!-- SERVICE CARD -->
+
+        <div class="card">
+
+            <div class="toolbar">
+
+                <div class="search-box">
+
+                    <i class="fa-solid fa-magnifying-glass"></i>
+
+                    <input
+                        type="text"
+                        id="searchInput"
+                        placeholder="Search services..."
+                        onkeyup="searchServices()"
+                    >
+
+                </div>
+
+                <div class="service-count">
+                    Showing <strong id="count">8</strong> services
+                </div>
+
+            </div>
+
+
+            <div class="table-container">
+
+                <table id="serviceTable">
+
+                    <thead>
+
+                        <tr>
+
+                            <th>Service</th>
+                            <th>Description</th>
+                            <th>Duration</th>
+                            <th>Price</th>
+                            <th>Status</th>
+                            <th>Actions</th>
+
+                        </tr>
+
+                    </thead>
+
+
+                    <tbody>
+
+
+                        <!-- HAIRCUT -->
+
+                        <tr>
+
+                            <td>
+
+                                <div class="service-name">
+
+                                    <div class="service-icon">
+                                        <i class="fa-solid fa-scissors"></i>
+                                    </div>
+
+                                    <div>
+
+                                        <strong>
+                                            Haircut
+                                        </strong>
+
+                                        <span>
+                                            #SRV1001
+                                        </span>
+
+                                    </div>
+
+                                </div>
+
+                            </td>
+
+                            <td>
+                                Professional haircut and styling
+                            </td>
+
+                            <td class="duration">
+                                30 min
+                            </td>
+
+                            <td class="price">
+                                ₹350
+                            </td>
+
+                            <td>
+                                <span class="status active">
+                                    Active
+                                </span>
+                            </td>
+
+                            <td>
+
+                                <div class="actions">
+
+                                    <button
+                                        class="action-btn"
+                                        onclick="viewService('Haircut')"
+                                        title="View"
+                                    >
+                                        <i class="fa-solid fa-eye"></i>
+                                    </button>
+
+                                    <button
+                                        class="action-btn"
+                                        onclick="editService('Haircut')"
+                                        title="Edit"
+                                    >
+                                        <i class="fa-solid fa-pen"></i>
+                                    </button>
+
+                                    <button
+                                        class="action-btn delete-btn"
+                                        onclick="deleteService('Haircut')"
+                                        title="Delete"
+                                    >
+                                        <i class="fa-solid fa-trash"></i>
+                                    </button>
+
+                                </div>
+
+                            </td>
+
+                        </tr>
+
+
+                        <!-- HAIR SPA -->
+
+                        <tr>
+
+                            <td>
+
+                                <div class="service-name">
+
+                                    <div class="service-icon">
+                                        <i class="fa-solid fa-spa"></i>
+                                    </div>
+
+                                    <div>
+
+                                        <strong>
+                                            Hair Spa
+                                        </strong>
+
+                                        <span>
+                                            #SRV1002
+                                        </span>
+
+                                    </div>
+
+                                </div>
+
+                            </td>
+
+                            <td>
+                                Deep conditioning and hair treatment
+                            </td>
+
+                            <td class="duration">
+                                60 min
+                            </td>
+
+                            <td class="price">
+                                ₹900
+                            </td>
+
+                            <td>
+                                <span class="status active">
+                                    Active
+                                </span>
+                            </td>
+
+                            <td>
+
+                                <div class="actions">
+
+                                    <button
+                                        class="action-btn"
+                                        onclick="viewService('Hair Spa')"
+                                    >
+                                        <i class="fa-solid fa-eye"></i>
+                                    </button>
+
+                                    <button
+                                        class="action-btn"
+                                        onclick="editService('Hair Spa')"
+                                    >
+                                        <i class="fa-solid fa-pen"></i>
+                                    </button>
+
+                                    <button
+                                        class="action-btn delete-btn"
+                                        onclick="deleteService('Hair Spa')"
+                                    >
+                                        <i class="fa-solid fa-trash"></i>
+                                    </button>
+
+                                </div>
+
+                            </td>
+
+                        </tr>
+
+
+                        <!-- HAIR COLORING -->
+
+                        <tr>
+
+                            <td>
+
+                                <div class="service-name">
+
+                                    <div class="service-icon">
+                                        <i class="fa-solid fa-palette"></i>
+                                    </div>
+
+                                    <div>
+
+                                        <strong>
+                                            Hair Coloring
+                                        </strong>
+
+                                        <span>
+                                            #SRV1003
+                                        </span>
+
+                                    </div>
+
+                                </div>
+
+                            </td>
+
+                            <td>
+                                Professional hair coloring service
+                            </td>
+
+                            <td class="duration">
+                                90 min
+                            </td>
+
+                            <td class="price">
+                                ₹1,500
+                            </td>
+
+                            <td>
+                                <span class="status active">
+                                    Active
+                                </span>
+                            </td>
+
+                            <td>
+
+                                <div class="actions">
+
+                                    <button
+                                        class="action-btn"
+                                        onclick="viewService('Hair Coloring')"
+                                    >
+                                        <i class="fa-solid fa-eye"></i>
+                                    </button>
+
+                                    <button
+                                        class="action-btn"
+                                        onclick="editService('Hair Coloring')"
+                                    >
+                                        <i class="fa-solid fa-pen"></i>
+                                    </button>
+
+                                    <button
+                                        class="action-btn delete-btn"
+                                        onclick="deleteService('Hair Coloring')"
+                                    >
+                                        <i class="fa-solid fa-trash"></i>
+                                    </button>
+
+                                </div>
+
+                            </td>
+
+                        </tr>
+
+
+                        <!-- FACIAL -->
+
+                        <tr>
+
+                            <td>
+
+                                <div class="service-name">
+
+                                    <div class="service-icon">
+                                        <i class="fa-solid fa-face-smile"></i>
+                                    </div>
+
+                                    <div>
+
+                                        <strong>
+                                            Facial
+                                        </strong>
+
+                                        <span>
+                                            #SRV1004
+                                        </span>
+
+                                    </div>
+
+                                </div>
+
+                            </td>
+
+                            <td>
+                                Skin cleansing and facial treatment
+                            </td>
+
+                            <td class="duration">
+                                45 min
+                            </td>
+
+                            <td class="price">
+                                ₹700
+                            </td>
+
+                            <td>
+                                <span class="status active">
+                                    Active
+                                </span>
+                            </td>
+
+                            <td>
+
+                                <div class="actions">
+
+                                    <button
+                                        class="action-btn"
+                                        onclick="viewService('Facial')"
+                                    >
+                                        <i class="fa-solid fa-eye"></i>
+                                    </button>
+
+                                    <button
+                                        class="action-btn"
+                                        onclick="editService('Facial')"
+                                    >
+                                        <i class="fa-solid fa-pen"></i>
+                                    </button>
+
+                                    <button
+                                        class="action-btn delete-btn"
+                                        onclick="deleteService('Facial')"
+                                    >
+                                        <i class="fa-solid fa-trash"></i>
+                                    </button>
+
+                                </div>
+
+                            </td>
+
+                        </tr>
+
+
+                        <!-- CLEANUP -->
+
+                        <tr>
+
+                            <td>
+
+                                <div class="service-name">
+
+                                    <div class="service-icon">
+                                        <i class="fa-solid fa-hand-sparkles"></i>
+                                    </div>
+
+                                    <div>
+
+                                        <strong>
+                                            Cleanup
+                                        </strong>
+
+                                        <span>
+                                            #SRV1005
+                                        </span>
+
+                                    </div>
+
+                                </div>
+
+                            </td>
+
+                            <td>
+                                Basic skin cleanup and refresh
+                            </td>
+
+                            <td class="duration">
+                                30 min
+                            </td>
+
+                            <td class="price">
+                                ₹500
+                            </td>
+
+                            <td>
+                                <span class="status active">
+                                    Active
+                                </span>
+                            </td>
+
+                            <td>
+
+                                <div class="actions">
+
+                                    <button
+                                        class="action-btn"
+                                        onclick="viewService('Cleanup')"
+                                    >
+                                        <i class="fa-solid fa-eye"></i>
+                                    </button>
+
+                                    <button
+                                        class="action-btn"
+                                        onclick="editService('Cleanup')"
+                                    >
+                                        <i class="fa-solid fa-pen"></i>
+                                    </button>
+
+                                    <button
+                                        class="action-btn delete-btn"
+                                        onclick="deleteService('Cleanup')"
+                                    >
+                                        <i class="fa-solid fa-trash"></i>
+                                    </button>
+
+                                </div>
+
+                            </td>
+
+                        </tr>
+
+
+                        <!-- MANICURE -->
+
+                        <tr>
+
+                            <td>
+
+                                <div class="service-name">
+
+                                    <div class="service-icon">
+                                        <i class="fa-solid fa-hand"></i>
+                                    </div>
+
+                                    <div>
+
+                                        <strong>
+                                            Manicure
+                                        </strong>
+
+                                        <span>
+                                            #SRV1006
+                                        </span>
+
+                                    </div>
+
+                                </div>
+
+                            </td>
+
+                            <td>
+                                Nail care and hand treatment
+                            </td>
+
+                            <td class="duration">
+                                45 min
+                            </td>
+
+                            <td class="price">
+                                ₹600
+                            </td>
+
+                            <td>
+                                <span class="status active">
+                                    Active
+                                </span>
+                            </td>
+
+                            <td>
+
+                                <div class="actions">
+
+                                    <button
+                                        class="action-btn"
+                                        onclick="viewService('Manicure')"
+                                    >
+                                        <i class="fa-solid fa-eye"></i>
+                                    </button>
+
+                                    <button
+                                        class="action-btn"
+                                        onclick="editService('Manicure')"
+                                    >
+                                        <i class="fa-solid fa-pen"></i>
+                                    </button>
+
+                                    <button
+                                        class="action-btn delete-btn"
+                                        onclick="deleteService('Manicure')"
+                                    >
+                                        <i class="fa-solid fa-trash"></i>
+                                    </button>
+
+                                </div>
+
+                            </td>
+
+                        </tr>
+
+
+                        <!-- PEDICURE -->
+
+                        <tr>
+
+                            <td>
+
+                                <div class="service-name">
+
+                                    <div class="service-icon">
+                                        <i class="fa-solid fa-shoe-prints"></i>
+                                    </div>
+
+                                    <div>
+
+                                        <strong>
+                                            Pedicure
+                                        </strong>
+
+                                        <span>
+                                            #SRV1007
+                                        </span>
+
+                                    </div>
+
+                                </div>
+
+                            </td>
+
+                            <td>
+                                Foot and nail care treatment
+                            </td>
+
+                            <td class="duration">
+                                45 min
+                            </td>
+
+                            <td class="price">
+                                ₹650
+                            </td>
+
+                            <td>
+                                <span class="status active">
+                                    Active
+                                </span>
+                            </td>
+
+                            <td>
+
+                                <div class="actions">
+
+                                    <button
+                                        class="action-btn"
+                                        onclick="viewService('Pedicure')"
+                                    >
+                                        <i class="fa-solid fa-eye"></i>
+                                    </button>
+
+                                    <button
+                                        class="action-btn"
+                                        onclick="editService('Pedicure')"
+                                    >
+                                        <i class="fa-solid fa-pen"></i>
+                                    </button>
+
+                                    <button
+                                        class="action-btn delete-btn"
+                                        onclick="deleteService('Pedicure')"
+                                    >
+                                        <i class="fa-solid fa-trash"></i>
+                                    </button>
+
+                                </div>
+
+                            </td>
+
+                        </tr>
+
+
+                        <!-- BRIDAL MAKEUP -->
+
+                        <tr>
+
+                            <td>
+
+                                <div class="service-name">
+
+                                    <div class="service-icon">
+                                        <i class="fa-solid fa-wand-magic-sparkles"></i>
+                                    </div>
+
+                                    <div>
+
+                                        <strong>
+                                            Bridal Makeup
+                                        </strong>
+
+                                        <span>
+                                            #SRV1008
+                                        </span>
+
+                                    </div>
+
+                                </div>
+
+                            </td>
+
+                            <td>
+                                Complete professional bridal makeup
+                            </td>
+
+                            <td class="duration">
+                                120 min
+                            </td>
+
+                            <td class="price">
+                                ₹3,500
+                            </td>
+
+                            <td>
+                                <span class="status active">
+                                    Active
+                                </span>
+                            </td>
+
+                            <td>
+
+                                <div class="actions">
+
+                                    <button
+                                        class="action-btn"
+                                        onclick="viewService('Bridal Makeup')"
+                                    >
+                                        <i class="fa-solid fa-eye"></i>
+                                    </button>
+
+                                    <button
+                                        class="action-btn"
+                                        onclick="editService('Bridal Makeup')"
+                                    >
+                                        <i class="fa-solid fa-pen"></i>
+                                    </button>
+
+                                    <button
+                                        class="action-btn delete-btn"
+                                        onclick="deleteService('Bridal Makeup')"
+                                    >
+                                        <i class="fa-solid fa-trash"></i>
+                                    </button>
+
+                                </div>
+
+                            </td>
+
+                        </tr>
+
+
+                    </tbody>
+
+                </table>
+
+
+                <div
+                    class="no-results"
+                    id="noResults"
+                >
+                    <i class="fa-solid fa-spa"></i>
+                    <br><br>
+                    No services found.
+                </div>
+
+            </div>
+
+        </div>
+
+    </main>
+
+
+    <script>
+
+let allServices = [];
+
+document.addEventListener("DOMContentLoaded", function () {
+    loadServices();
+});
+
+
+async function loadServices() {
+
+    try {
+
+        const response =
+            await fetch("/api/admin/services");
+
+        const data =
+            await response.json();
+
+        if (!data.success) {
+
+            alert(
+                "Unable to load services.\n\n" +
+                data.message
+            );
+
+            return;
+        }
+
+        allServices =
+            data.services || [];
+
+        displayServices(allServices);
+
+    }
+    catch (error) {
+
+        console.error(
+            "Service loading error:",
+            error
+        );
+
+        alert(
+            "Unable to connect to the SalonEase server.\n\n" +
+            "Please make sure the server is running."
+        );
+    }
+}
+
+
+function displayServices(services) {
+
+    const tbody =
+        document.querySelector(
+            "#serviceTable tbody"
+        );
+
+    const count =
+        document.getElementById("count");
+
+    const noResults =
+        document.getElementById("noResults");
+
+
+    count.textContent =
+        services.length;
+
+
+    if (services.length === 0) {
+
+        tbody.innerHTML = "";
+
+        noResults.style.display =
+            "block";
+
+        return;
+    }
+
+
+    noResults.style.display =
+        "none";
+
+
+    tbody.innerHTML =
+        services.map(function (service) {
+
+            const status =
+                service.status || "Active";
+
+            const statusClass =
+                status.toLowerCase();
+
+
+            return `
+
+                <tr>
+
+                    <td>
+
+                        <div class="service-name">
+
+                            <div class="service-icon">
+                                <i class="fa-solid fa-scissors"></i>
+                            </div>
+
+                            <div>
+
+                                <strong>
+                                    ${service.service_name}
+                                </strong>
+
+                                <span>
+                                    #SRV${String(
+                                        service.service_id
+                                    ).padStart(4, "0")}
+                                </span>
+
+                            </div>
+
+                        </div>
+
+                    </td>
+
+
+                    <td>
+                        ${service.description || "N/A"}
+                    </td>
+
+
+                    <td class="duration">
+                        ${service.duration} min
+                    </td>
+
+
+                    <td class="price">
+                        ₹${Number(
+                            service.price
+                        ).toLocaleString("en-IN")}
+                    </td>
+
+
+                    <td>
+
+                        <span class="status ${statusClass}">
+                            ${status}
+                        </span>
+
+                    </td>
+
+
+                    <td>
+
+                        <div class="actions">
+
+                            <button
+                                class="action-btn"
+                                onclick="viewService(${service.service_id})"
+                                title="View"
+                            >
+                                <i class="fa-solid fa-eye"></i>
+                            </button>
+
+
+                            <button
+                                class="action-btn"
+                                onclick="editService(${service.service_id})"
+                                title="Edit"
+                            >
+                                <i class="fa-solid fa-pen"></i>
+                            </button>
+
+
+                            <button
+                                class="action-btn delete-btn"
+                                onclick="deleteService(${service.service_id})"
+                                title="Delete"
+                            >
+                                <i class="fa-solid fa-trash"></i>
+                            </button>
+
+                        </div>
+
+                    </td>
+
+                </tr>
+
+            `;
+
+        }).join("");
+}
+
+
+function searchServices() {
+
+    const input =
+        document
+            .getElementById("searchInput")
+            .value
+            .toLowerCase()
+            .trim();
+
+
+    const filteredServices =
+        allServices.filter(function (service) {
+
+            return (
+
+                service.service_name
+                    .toLowerCase()
+                    .includes(input)
+
+                ||
+
+                (service.description || "")
+                    .toLowerCase()
+                    .includes(input)
+
+            );
+
+        });
+
+
+    displayServices(
+        filteredServices
+    );
+}
+
+
+function viewService(serviceId) {
+
+    const service =
+        allServices.find(function (item) {
+
+            return (
+                item.service_id === serviceId
+            );
+
+        });
+
+
+    if (!service) {
+
+        alert("Service not found.");
+
+        return;
+    }
+
+
+    alert(
+
+        "Service Details\n\n" +
+
+        "Service ID: #" +
+
+        String(
+            service.service_id
+        ).padStart(4, "0") +
+
+        "\nService: " +
+        service.service_name +
+
+        "\nDescription: " +
+        service.description +
+
+        "\nDuration: " +
+        service.duration +
+        " minutes" +
+
+        "\nPrice: ₹" +
+        Number(service.price)
+            .toLocaleString("en-IN") +
+
+        "\nStatus: " +
+        service.status
+
+    );
+}
+
+
+async function editService(serviceId) {
+
+    const service = allServices.find(function (item) {
+        return item.service_id === serviceId;
+    });
+
+    if (!service) {
+        alert("Service not found.");
+        return;
+    }
+
+    const serviceName = prompt(
+        "Enter service name:",
+        service.service_name
+    );
+
+    if (serviceName === null) return;
+
+
+    const description = prompt(
+        "Enter service description:",
+        service.description || ""
+    );
+
+    if (description === null) return;
+
+
+    const price = prompt(
+        "Enter service price:",
+        service.price
+    );
+
+    if (price === null) return;
+
+
+    const duration = prompt(
+        "Enter duration in minutes:",
+        service.duration
+    );
+
+    if (duration === null) return;
+
+
+    const status = prompt(
+        "Enter status (Active or Inactive):",
+        service.status
+    );
+
+    if (status === null) return;
+
+
+    if (serviceName.trim() === "") {
+        alert("Service name is required.");
+        return;
+    }
+
+
+    if (price.trim() === "" || isNaN(price)) {
+        alert("Please enter a valid price.");
+        return;
+    }
+
+
+    if (
+        duration.trim() === "" ||
+        isNaN(duration) ||
+        Number(duration) <= 0
+    ) {
+        alert("Please enter a valid duration.");
+        return;
+    }
+
+
+    const cleanStatus = status.trim();
+
+    if (
+        cleanStatus !== "Active" &&
+        cleanStatus !== "Inactive"
+    ) {
+        alert("Status must be either Active or Inactive.");
+        return;
+    }
+
+
+    try {
+
+        const response = await fetch(
+            "/api/admin/services/" + serviceId,
+            {
+                method: "PUT",
+
+                headers: {
+                    "Content-Type": "application/json"
+                },
+
+                body: JSON.stringify({
+
+                    service_name: serviceName.trim(),
+
+                    description: description.trim(),
+
+                    price: Number(price),
+
+                    duration: Number(duration),
+
+                    status: cleanStatus
+
+                })
+            }
+        );
+
+
+        const data = await response.json();
+
+
+        if (!data.success) {
+
+            alert(
+                "Unable to update service.\n\n" +
+                data.message
+            );
+
+            return;
+        }
+
+
+        alert("Service updated successfully!");
+
+
+        const index = allServices.findIndex(
+            function (item) {
+                return item.service_id === serviceId;
+            }
+        );
+
+
+        if (index !== -1) {
+
+            allServices[index] =
+                data.service;
+
+        }
+
+
+        displayServices(allServices);
+
+
+    } catch (error) {
+
+        console.error(
+            "Edit service error:",
+            error
+        );
+
+        alert(
+            "Unable to connect to the SalonEase server."
+        );
+
+    }
+
+}
+
+
+async function deleteService(serviceId) {
+
+    const service = allServices.find(function (item) {
+        return item.service_id === serviceId;
+    });
+
+    if (!service) {
+        alert("Service not found.");
+        return;
+    }
+
+    const confirmation = confirm(
+        "Are you sure you want to delete " +
+        service.service_name +
+        "?\n\n" +
+        "This will permanently remove the service from the database."
+    );
+
+    if (!confirmation) {
+        return;
+    }
+
+    try {
+
+        const response = await fetch(
+            "/api/admin/services/" + serviceId,
+            {
+                method: "DELETE"
+            }
+        );
+
+        const data = await response.json();
+
+        if (!data.success) {
+
+            alert(
+                "Unable to delete service.\n\n" +
+                data.message
+            );
+
+            return;
+        }
+
+        alert(
+            service.service_name +
+            " has been deleted successfully."
+        );
+
+        allServices = allServices.filter(
+            function (item) {
+                return item.service_id !== serviceId;
+            }
+        );
+
+        displayServices(allServices);
+
+    } catch (error) {
+
+        console.error(
+            "Delete service error:",
+            error
+        );
+
+        alert(
+            "Unable to connect to the SalonEase server."
+        );
+    }
+}
+
+
+async function addService() {
+
+    const serviceName = prompt(
+        "Enter service name:"
+    );
+
+    if (serviceName === null) return;
+
+
+    const description = prompt(
+        "Enter service description:"
+    );
+
+    if (description === null) return;
+
+
+    const price = prompt(
+        "Enter service price:"
+    );
+
+    if (price === null) return;
+
+
+    const duration = prompt(
+        "Enter duration in minutes:"
+    );
+
+    if (duration === null) return;
+
+
+    const status = prompt(
+        "Enter status (Active or Inactive):",
+        "Active"
+    );
+
+    if (status === null) return;
+
+
+    // Validation
+
+    if (serviceName.trim() === "") {
+
+        alert("Service name is required.");
+
+        return;
+    }
+
+
+    if (
+        price.trim() === "" ||
+        isNaN(price) ||
+        Number(price) < 0
+    ) {
+
+        alert("Please enter a valid price.");
+
+        return;
+    }
+
+
+    if (
+        duration.trim() === "" ||
+        isNaN(duration) ||
+        Number(duration) <= 0
+    ) {
+
+        alert("Please enter a valid duration.");
+
+        return;
+    }
+
+
+    const cleanStatus = status.trim();
+
+
+    if (
+        cleanStatus !== "Active" &&
+        cleanStatus !== "Inactive"
+    ) {
+
+        alert(
+            "Status must be either Active or Inactive."
+        );
+
+        return;
+    }
+
+
+    try {
+
+        const response = await fetch(
+            "/api/admin/services",
+            {
+                method: "POST",
+
+                headers: {
+                    "Content-Type": "application/json"
+                },
+
+                body: JSON.stringify({
+
+                    service_name:
+                        serviceName.trim(),
+
+                    description:
+                        description.trim(),
+
+                    price:
+                        Number(price),
+
+                    duration:
+                        Number(duration),
+
+                    status:
+                        cleanStatus
+
+                })
+            }
+        );
+
+
+        const data =
+            await response.json();
+
+
+        if (!data.success) {
+
+            alert(
+                "Unable to add service.\n\n" +
+                data.message
+            );
+
+            return;
+        }
+
+
+        alert(
+            "Service added successfully!"
+        );
+
+
+        // Add the new service to the current list
+
+        allServices.push(
+            data.service
+        );
+
+
+        // Refresh the table
+
+        displayServices(
+            allServices
+        );
+
+
+    } catch (error) {
+
+        console.error(
+            "Add service error:",
+            error
+        );
+
+        alert(
+            "Unable to connect to the SalonEase server."
+        );
+
+    }
+
+}
+
+</script>
+
+</body>
+</html>

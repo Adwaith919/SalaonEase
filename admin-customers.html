@@ -1,0 +1,1482 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Customers | SalonEase Admin</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <link
+        href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet"
+    >
+
+    <link
+        rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+    >
+
+    <style>
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: "Poppins", sans-serif;
+        }
+
+        body {
+            background: #f5f6fa;
+            color: #333;
+        }
+
+        /* NAVBAR */
+
+        .navbar {
+            height: 70px;
+            background: white;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 6%;
+            box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+        }
+
+        .logo {
+            font-size: 25px;
+            font-weight: 700;
+            color: #6c63ff;
+            text-decoration: none;
+        }
+
+        .logo span {
+            color: #333;
+        }
+
+        .nav-right {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .dashboard-link {
+            text-decoration: none;
+            color: #555;
+            font-size: 14px;
+        }
+
+        .dashboard-link:hover {
+            color: #6c63ff;
+        }
+
+        .admin-icon {
+            width: 40px;
+            height: 40px;
+            background: #6c63ff;
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* CONTAINER */
+
+        .container {
+            width: 88%;
+            max-width: 1400px;
+            margin: auto;
+            padding: 40px 0;
+        }
+
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            color: #6c63ff;
+            text-decoration: none;
+            font-size: 13px;
+            margin-bottom: 20px;
+        }
+
+        .page-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 25px;
+        }
+
+        .page-header h1 {
+            font-size: 28px;
+            color: #222;
+        }
+
+        .page-header p {
+            color: #888;
+            font-size: 13px;
+            margin-top: 5px;
+        }
+
+        /* ADD BUTTON */
+
+        .add-btn {
+            border: none;
+            background: #6c63ff;
+            color: white;
+            padding: 12px 18px;
+            border-radius: 9px;
+            font-size: 13px;
+            font-weight: 600;
+            cursor: pointer;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .add-btn:hover {
+            background: #584ff0;
+        }
+
+        /* CARD */
+
+        .card {
+            background: white;
+            border-radius: 16px;
+            padding: 25px;
+            box-shadow: 0 6px 25px rgba(0,0,0,0.06);
+        }
+
+        /* SEARCH */
+
+        .toolbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 22px;
+            gap: 20px;
+        }
+
+        .search-box {
+            width: 350px;
+            position: relative;
+        }
+
+        .search-box i {
+            position: absolute;
+            left: 14px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #999;
+        }
+
+        .search-box input {
+            width: 100%;
+            padding: 12px 15px 12px 40px;
+            border: 1px solid #ddd;
+            border-radius: 9px;
+            outline: none;
+            font-size: 13px;
+        }
+
+        .search-box input:focus {
+            border-color: #6c63ff;
+        }
+
+        .customer-count {
+            font-size: 13px;
+            color: #777;
+        }
+
+        /* TABLE */
+
+        .table-container {
+            overflow-x: auto;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            min-width: 850px;
+        }
+
+        th {
+            text-align: left;
+            padding: 14px 12px;
+            font-size: 12px;
+            color: #888;
+            background: #fafafa;
+            border-bottom: 1px solid #eee;
+        }
+
+        td {
+            padding: 16px 12px;
+            font-size: 13px;
+            border-bottom: 1px solid #f0f0f0;
+        }
+
+        tbody tr:hover {
+            background: #fafaff;
+        }
+
+        .customer-name {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .avatar {
+            width: 38px;
+            height: 38px;
+            border-radius: 50%;
+            background: #eeeefc;
+            color: #6c63ff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+            font-size: 13px;
+        }
+
+        .name-text strong {
+            display: block;
+            color: #333;
+            font-size: 13px;
+        }
+
+        .name-text span {
+            color: #999;
+            font-size: 11px;
+        }
+
+        /* STATUS */
+
+        .status {
+            padding: 5px 10px;
+            border-radius: 20px;
+            font-size: 11px;
+            font-weight: 600;
+        }
+
+        .active {
+            background: #e8f8ef;
+            color: #21a366;
+        }
+
+        /* ACTIONS */
+
+        .actions {
+            display: flex;
+            gap: 8px;
+        }
+
+        .action-btn {
+            width: 34px;
+            height: 34px;
+            border: 1px solid #eee;
+            border-radius: 8px;
+            background: white;
+            cursor: pointer;
+            color: #666;
+        }
+
+        .action-btn:hover {
+            background: #f3f2ff;
+            color: #6c63ff;
+            border-color: #d9d6ff;
+        }
+
+        .delete-btn:hover {
+            background: #fff1f1;
+            color: #e05252;
+            border-color: #ffd5d5;
+        }
+
+        /* EMPTY */
+
+        .no-results {
+            text-align: center;
+            padding: 35px;
+            color: #999;
+            display: none;
+        }
+
+        /* RESPONSIVE */
+
+        @media (max-width: 700px) {
+
+            .container {
+                width: 92%;
+            }
+
+            .page-header {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 15px;
+            }
+
+            .toolbar {
+                flex-direction: column;
+                align-items: stretch;
+            }
+
+            .search-box {
+                width: 100%;
+            }
+
+            .nav-right .dashboard-link {
+                display: none;
+            }
+
+        }
+
+    </style>
+</head>
+
+<body>
+
+    <!-- NAVBAR -->
+
+    <nav class="navbar">
+
+        <a href="admin.html" class="logo">
+            Salon<span>Ease</span>
+        </a>
+
+        <div class="nav-right">
+
+            <a
+                href="admin.html"
+                class="dashboard-link"
+            >
+                <i class="fa-solid fa-chart-line"></i>
+                Dashboard
+            </a>
+
+            <div class="admin-icon">
+                <i class="fa-solid fa-user-shield"></i>
+            </div>
+
+        </div>
+
+    </nav>
+
+
+    <!-- MAIN -->
+
+    <main class="container">
+
+        <a href="admin.html" class="back-link">
+            <i class="fa-solid fa-arrow-left"></i>
+            Back to Dashboard
+        </a>
+
+
+        <div class="page-header">
+
+            <div>
+
+                <h1>
+                    Customers
+                </h1>
+
+                <p>
+                    Manage registered SalonEase customers.
+                </p>
+
+            </div>
+
+            <button
+                class="add-btn"
+                onclick="addCustomer()"
+            >
+                <i class="fa-solid fa-plus"></i>
+                Add Customer
+            </button>
+
+        </div>
+
+
+        <!-- CUSTOMER CARD -->
+
+        <div class="card">
+
+            <div class="toolbar">
+
+                <div class="search-box">
+
+                    <i class="fa-solid fa-magnifying-glass"></i>
+
+                    <input
+                        type="text"
+                        id="searchInput"
+                        placeholder="Search customers..."
+                        onkeyup="searchCustomers()"
+                    >
+
+                </div>
+
+                <div class="customer-count">
+                    Showing <strong id="count">6</strong> customers
+                </div>
+
+            </div>
+
+
+            <div class="table-container">
+
+                <table id="customerTable">
+
+                    <thead>
+
+                        <tr>
+
+                            <th>Customer</th>
+
+                            <th>Email</th>
+
+                            <th>Phone</th>
+
+                            <th>Registered</th>
+
+                            <th>Status</th>
+
+                            <th>Actions</th>
+
+                        </tr>
+
+                    </thead>
+
+
+                    <tbody>
+
+
+                        <tr>
+
+                            <td>
+
+                                <div class="customer-name">
+
+                                    <div class="avatar">
+                                        AS
+                                    </div>
+
+                                    <div class="name-text">
+
+                                        <strong>
+                                            Adwaith S
+                                        </strong>
+
+                                        <span>
+                                            #CUS1001
+                                        </span>
+
+                                    </div>
+
+                                </div>
+
+                            </td>
+
+                            <td>
+                                adwaith@example.com
+                            </td>
+
+                            <td>
+                                +91 98765 43210
+                            </td>
+
+                            <td>
+                                12 Aug 2026
+                            </td>
+
+                            <td>
+                                <span class="status active">
+                                    Active
+                                </span>
+                            </td>
+
+                            <td>
+
+                                <div class="actions">
+
+                                    <button
+                                        class="action-btn"
+                                        onclick="viewCustomer('Adwaith S')"
+                                        title="View"
+                                    >
+                                        <i class="fa-solid fa-eye"></i>
+                                    </button>
+
+                                    <button
+                                        class="action-btn"
+                                        onclick="editCustomer('Adwaith S')"
+                                        title="Edit"
+                                    >
+                                        <i class="fa-solid fa-pen"></i>
+                                    </button>
+
+                                    <button
+                                        class="action-btn delete-btn"
+                                        onclick="deleteCustomer('Adwaith S')"
+                                        title="Delete"
+                                    >
+                                        <i class="fa-solid fa-trash"></i>
+                                    </button>
+
+                                </div>
+
+                            </td>
+
+                        </tr>
+
+
+                        <tr>
+
+                            <td>
+
+                                <div class="customer-name">
+
+                                    <div class="avatar">
+                                        RR
+                                    </div>
+
+                                    <div class="name-text">
+
+                                        <strong>
+                                            Riya Rakhesh
+                                        </strong>
+
+                                        <span>
+                                            #CUS1002
+                                        </span>
+
+                                    </div>
+
+                                </div>
+
+                            </td>
+
+                            <td>
+                                riya@example.com
+                            </td>
+
+                            <td>
+                                +91 98470 12345
+                            </td>
+
+                            <td>
+                                18 Aug 2026
+                            </td>
+
+                            <td>
+                                <span class="status active">
+                                    Active
+                                </span>
+                            </td>
+
+                            <td>
+
+                                <div class="actions">
+
+                                    <button
+                                        class="action-btn"
+                                        onclick="viewCustomer('Riya Rakhesh')"
+                                    >
+                                        <i class="fa-solid fa-eye"></i>
+                                    </button>
+
+                                    <button
+                                        class="action-btn"
+                                        onclick="editCustomer('Riya Rakhesh')"
+                                    >
+                                        <i class="fa-solid fa-pen"></i>
+                                    </button>
+
+                                    <button
+                                        class="action-btn delete-btn"
+                                        onclick="deleteCustomer('Riya Rakhesh')"
+                                    >
+                                        <i class="fa-solid fa-trash"></i>
+                                    </button>
+
+                                </div>
+
+                            </td>
+
+                        </tr>
+
+
+                        <tr>
+
+                            <td>
+
+                                <div class="customer-name">
+
+                                    <div class="avatar">
+                                        SP
+                                    </div>
+
+                                    <div class="name-text">
+
+                                        <strong>
+                                            Siddharth Prajoth
+                                        </strong>
+
+                                        <span>
+                                            #CUS1003
+                                        </span>
+
+                                    </div>
+
+                                </div>
+
+                            </td>
+
+                            <td>
+                                siddharth@example.com
+                            </td>
+
+                            <td>
+                                +91 98950 54321
+                            </td>
+
+                            <td>
+                                22 Aug 2026
+                            </td>
+
+                            <td>
+                                <span class="status active">
+                                    Active
+                                </span>
+                            </td>
+
+                            <td>
+
+                                <div class="actions">
+
+                                    <button
+                                        class="action-btn"
+                                        onclick="viewCustomer('Siddharth Prajoth')"
+                                    >
+                                        <i class="fa-solid fa-eye"></i>
+                                    </button>
+
+                                    <button
+                                        class="action-btn"
+                                        onclick="editCustomer('Siddharth Prajoth')"
+                                    >
+                                        <i class="fa-solid fa-pen"></i>
+                                    </button>
+
+                                    <button
+                                        class="action-btn delete-btn"
+                                        onclick="deleteCustomer('Siddharth Prajoth')"
+                                    >
+                                        <i class="fa-solid fa-trash"></i>
+                                    </button>
+
+                                </div>
+
+                            </td>
+
+                        </tr>
+
+
+                        <tr>
+
+                            <td>
+
+                                <div class="customer-name">
+
+                                    <div class="avatar">
+                                        KH
+                                    </div>
+
+                                    <div class="name-text">
+
+                                        <strong>
+                                            Kailas H
+                                        </strong>
+
+                                        <span>
+                                            #CUS1004
+                                        </span>
+
+                                    </div>
+
+                                </div>
+
+                            </td>
+
+                            <td>
+                                kailas@example.com
+                            </td>
+
+                            <td>
+                                +91 97460 67890
+                            </td>
+
+                            <td>
+                                25 Aug 2026
+                            </td>
+
+                            <td>
+                                <span class="status active">
+                                    Active
+                                </span>
+                            </td>
+
+                            <td>
+
+                                <div class="actions">
+
+                                    <button
+                                        class="action-btn"
+                                        onclick="viewCustomer('Kailas H')"
+                                    >
+                                        <i class="fa-solid fa-eye"></i>
+                                    </button>
+
+                                    <button
+                                        class="action-btn"
+                                        onclick="editCustomer('Kailas H')"
+                                    >
+                                        <i class="fa-solid fa-pen"></i>
+                                    </button>
+
+                                    <button
+                                        class="action-btn delete-btn"
+                                        onclick="deleteCustomer('Kailas H')"
+                                    >
+                                        <i class="fa-solid fa-trash"></i>
+                                    </button>
+
+                                </div>
+
+                            </td>
+
+                        </tr>
+
+
+                        <tr>
+
+                            <td>
+
+                                <div class="customer-name">
+
+                                    <div class="avatar">
+                                        AN
+                                    </div>
+
+                                    <div class="name-text">
+
+                                        <strong>
+                                            Ananya Nair
+                                        </strong>
+
+                                        <span>
+                                            #CUS1005
+                                        </span>
+
+                                    </div>
+
+                                </div>
+
+                            </td>
+
+                            <td>
+                                ananya@example.com
+                            </td>
+
+                            <td>
+                                +91 99610 23456
+                            </td>
+
+                            <td>
+                                29 Aug 2026
+                            </td>
+
+                            <td>
+                                <span class="status active">
+                                    Active
+                                </span>
+                            </td>
+
+                            <td>
+
+                                <div class="actions">
+
+                                    <button
+                                        class="action-btn"
+                                        onclick="viewCustomer('Ananya Nair')"
+                                    >
+                                        <i class="fa-solid fa-eye"></i>
+                                    </button>
+
+                                    <button
+                                        class="action-btn"
+                                        onclick="editCustomer('Ananya Nair')"
+                                    >
+                                        <i class="fa-solid fa-pen"></i>
+                                    </button>
+
+                                    <button
+                                        class="action-btn delete-btn"
+                                        onclick="deleteCustomer('Ananya Nair')"
+                                    >
+                                        <i class="fa-solid fa-trash"></i>
+                                    </button>
+
+                                </div>
+
+                            </td>
+
+                        </tr>
+
+
+                        <tr>
+
+                            <td>
+
+                                <div class="customer-name">
+
+                                    <div class="avatar">
+                                        VM
+                                    </div>
+
+                                    <div class="name-text">
+
+                                        <strong>
+                                            Vishnu M
+                                        </strong>
+
+                                        <span>
+                                            #CUS1006
+                                        </span>
+
+                                    </div>
+
+                                </div>
+
+                            </td>
+
+                            <td>
+                                vishnu@example.com
+                            </td>
+
+                            <td>
+                                +91 98200 34567
+                            </td>
+
+                            <td>
+                                02 Sep 2026
+                            </td>
+
+                            <td>
+                                <span class="status active">
+                                    Active
+                                </span>
+                            </td>
+
+                            <td>
+
+                                <div class="actions">
+
+                                    <button
+                                        class="action-btn"
+                                        onclick="viewCustomer('Vishnu M')"
+                                    >
+                                        <i class="fa-solid fa-eye"></i>
+                                    </button>
+
+                                    <button
+                                        class="action-btn"
+                                        onclick="editCustomer('Vishnu M')"
+                                    >
+                                        <i class="fa-solid fa-pen"></i>
+                                    </button>
+
+                                    <button
+                                        class="action-btn delete-btn"
+                                        onclick="deleteCustomer('Vishnu M')"
+                                    >
+                                        <i class="fa-solid fa-trash"></i>
+                                    </button>
+
+                                </div>
+
+                            </td>
+
+                        </tr>
+
+
+                    </tbody>
+
+                </table>
+
+
+                <div
+                    class="no-results"
+                    id="noResults"
+                >
+                    <i class="fa-solid fa-user-slash"></i>
+                    <br><br>
+                    No customers found.
+                </div>
+
+            </div>
+
+        </div>
+
+    </main>
+
+
+    <!-- JAVASCRIPT -->
+
+<script>
+
+document.addEventListener("DOMContentLoaded", function () {
+
+    loadCustomers();
+
+});
+
+
+let allCustomers = [];
+
+
+// =====================================
+// LOAD CUSTOMERS FROM DATABASE
+// =====================================
+
+async function loadCustomers() {
+
+    try {
+
+        const response =
+            await fetch("/api/admin/customers");
+
+        const data =
+            await response.json();
+
+
+        if (!data.success) {
+
+            alert(
+                "Unable to load customers.\n\n" +
+                data.message
+            );
+
+            return;
+        }
+
+
+        allCustomers = data.customers || [];
+
+        displayCustomers(allCustomers);
+
+    }
+    catch (error) {
+
+        console.error(
+            "Customer loading error:",
+            error
+        );
+
+        alert(
+            "Unable to connect to the SalonEase server.\n\n" +
+            "Please make sure the server is running."
+        );
+    }
+
+}
+
+
+// =====================================
+// DISPLAY CUSTOMERS
+// =====================================
+
+function displayCustomers(customers) {
+
+    const tbody =
+        document.querySelector(
+            "#customerTable tbody"
+        );
+
+    const count =
+        document.getElementById("count");
+
+    const noResults =
+        document.getElementById("noResults");
+
+
+    count.textContent =
+        customers.length;
+
+
+    if (customers.length === 0) {
+
+        tbody.innerHTML = "";
+
+        noResults.style.display = "block";
+
+        return;
+    }
+
+
+    noResults.style.display = "none";
+
+
+    tbody.innerHTML =
+        customers.map(function (customer) {
+
+
+            // Get initials
+
+            const nameParts =
+                customer.name.trim().split(" ");
+
+            let initials = "";
+
+            if (nameParts.length >= 2) {
+
+                initials =
+                    nameParts[0].charAt(0) +
+                    nameParts[nameParts.length - 1].charAt(0);
+
+            }
+            else {
+
+                initials =
+                    nameParts[0].substring(0, 2);
+            }
+
+
+            initials =
+                initials.toUpperCase();
+
+
+            // Format registration date
+
+            let registeredDate = "N/A";
+
+
+            if (customer.created_at) {
+
+                const date =
+                    new Date(customer.created_at);
+
+                registeredDate =
+                    date.toLocaleDateString(
+                        "en-IN",
+                        {
+                            day: "2-digit",
+                            month: "short",
+                            year: "numeric"
+                        }
+                    );
+            }
+
+
+            return `
+
+                <tr>
+
+                    <td>
+
+                        <div class="customer-name">
+
+                            <div class="avatar">
+                                ${initials}
+                            </div>
+
+                            <div class="name-text">
+
+                                <strong>
+                                    ${customer.name}
+                                </strong>
+
+                                <span>
+                                    #CUS${String(customer.customer_id).padStart(4, "0")}
+                                </span>
+
+                            </div>
+
+                        </div>
+
+                    </td>
+
+
+                    <td>
+                        ${customer.email}
+                    </td>
+
+
+                    <td>
+                        ${customer.phone}
+                    </td>
+
+
+                    <td>
+                        ${registeredDate}
+                    </td>
+
+
+                    <td>
+
+                        <span class="status active">
+                            Active
+                        </span>
+
+                    </td>
+
+
+                    <td>
+
+                        <div class="actions">
+
+
+                            <button
+                                class="action-btn"
+                                onclick="viewCustomer(${customer.customer_id})"
+                                title="View"
+                            >
+
+                                <i class="fa-solid fa-eye"></i>
+
+                            </button>
+
+
+                            <button
+                                class="action-btn"
+                                onclick="editCustomer(${customer.customer_id})"
+                                title="Edit"
+                            >
+
+                                <i class="fa-solid fa-pen"></i>
+
+                            </button>
+
+
+                            <button
+                                class="action-btn delete-btn"
+                                onclick="deleteCustomer(${customer.customer_id})"
+                                title="Delete"
+                            >
+
+                                <i class="fa-solid fa-trash"></i>
+
+                            </button>
+
+
+                        </div>
+
+                    </td>
+
+                </tr>
+
+            `;
+
+        }).join("");
+
+}
+
+
+// =====================================
+// SEARCH CUSTOMERS
+// =====================================
+
+function searchCustomers() {
+
+    const input =
+        document
+        .getElementById("searchInput")
+        .value
+        .toLowerCase()
+        .trim();
+
+
+    const filteredCustomers =
+        allCustomers.filter(function (customer) {
+
+            return (
+
+                customer.name
+                    .toLowerCase()
+                    .includes(input)
+
+                ||
+
+                customer.email
+                    .toLowerCase()
+                    .includes(input)
+
+                ||
+
+                customer.phone
+                    .toLowerCase()
+                    .includes(input)
+
+            );
+
+        });
+
+
+    displayCustomers(filteredCustomers);
+
+}
+
+
+// =====================================
+// VIEW CUSTOMER
+// =====================================
+
+function viewCustomer(customerId) {
+
+    const customer =
+        allCustomers.find(function (item) {
+
+            return item.customer_id === customerId;
+
+        });
+
+
+    if (!customer) {
+
+        alert("Customer not found.");
+
+        return;
+    }
+
+
+    alert(
+        "Customer Profile\n\n" +
+
+        "Customer ID: #" +
+        String(customer.customer_id).padStart(4, "0") +
+
+        "\nName: " +
+        customer.name +
+
+        "\nEmail: " +
+        customer.email +
+
+        "\nPhone: " +
+        customer.phone
+    );
+
+}
+
+
+// =====================================
+// EDIT CUSTOMER
+// =====================================
+
+async function editCustomer(customerId) {
+
+    const customer =
+        allCustomers.find(function (item) {
+            return item.customer_id === customerId;
+        });
+
+    if (!customer) {
+        alert("Customer not found.");
+        return;
+    }
+
+    const name =
+        prompt(
+            "Enter customer name:",
+            customer.name
+        );
+
+    if (name === null) {
+        return;
+    }
+
+    const email =
+        prompt(
+            "Enter customer email:",
+            customer.email
+        );
+
+    if (email === null) {
+        return;
+    }
+
+    const phone =
+        prompt(
+            "Enter customer phone:",
+            customer.phone
+        );
+
+    if (phone === null) {
+        return;
+    }
+
+    if (
+        name.trim() === "" ||
+        email.trim() === "" ||
+        phone.trim() === ""
+    ) {
+        alert("All fields are required.");
+        return;
+    }
+
+    try {
+
+        const response =
+            await fetch(
+                "/api/admin/customers/" + customerId,
+                {
+                    method: "PUT",
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify({
+                        name: name.trim(),
+                        email: email.trim(),
+                        phone: phone.trim()
+                    })
+                }
+            );
+
+        const data =
+            await response.json();
+
+        if (!data.success) {
+            alert(
+                "Unable to update customer.\n\n" +
+                data.message
+            );
+            return;
+        }
+
+        alert(
+            "Customer updated successfully!"
+        );
+
+        // Update local customer data
+        const index =
+            allCustomers.findIndex(function (item) {
+                return item.customer_id === customerId;
+            });
+
+        if (index !== -1) {
+            allCustomers[index] =
+                data.customer;
+        }
+
+        // Refresh table
+        displayCustomers(allCustomers);
+
+    }
+    catch (error) {
+
+        console.error(
+            "Edit customer error:",
+            error
+        );
+
+        alert(
+            "Unable to connect to the SalonEase server."
+        );
+    }
+}
+
+// =====================================
+// DELETE CUSTOMER
+// =====================================
+
+async function deleteCustomer(customerId) {
+
+    const customer =
+        allCustomers.find(function (item) {
+            return item.customer_id === customerId;
+        });
+
+    if (!customer) {
+        alert("Customer not found.");
+        return;
+    }
+
+    const confirmation =
+        confirm(
+            "Are you sure you want to delete " +
+            customer.name +
+            "?\n\nThis will permanently remove the customer from the database."
+        );
+
+    if (!confirmation) {
+        return;
+    }
+
+    try {
+
+        const response =
+            await fetch(
+                "/api/admin/customers/" + customerId,
+                {
+                    method: "DELETE"
+                }
+            );
+
+        const data =
+            await response.json();
+
+        if (!data.success) {
+            alert(
+                "Unable to delete customer.\n\n" +
+                data.message
+            );
+            return;
+        }
+
+        alert(
+            customer.name +
+            " has been deleted successfully."
+        );
+
+        // Remove customer from the local list
+        allCustomers =
+            allCustomers.filter(function (item) {
+                return item.customer_id !== customerId;
+            });
+
+        // Refresh the table
+        displayCustomers(allCustomers);
+
+    }
+    catch (error) {
+
+        console.error(
+            "Delete customer error:",
+            error
+        );
+
+        alert(
+            "Unable to connect to the SalonEase server."
+        );
+    }
+}
+
+// =====================================
+// ADD CUSTOMER
+// =====================================
+
+function addCustomer() {
+
+    alert(
+        "Add Customer\n\n" +
+        "Customer registration is already handled through the SalonEase registration system."
+    );
+
+}
+
+</script>
+
+</body>
+</html>

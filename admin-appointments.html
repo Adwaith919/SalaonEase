@@ -1,0 +1,1926 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Appointments | SalonEase Admin</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+
+    <style>
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: "Poppins", sans-serif;
+            background: #f5f6fa;
+            color: #222;
+        }
+
+        /* ================= NAVBAR ================= */
+
+        .navbar {
+            height: 72px;
+            background: white;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 6%;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.06);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            text-decoration: none;
+            color: #6c63ff;
+            font-size: 23px;
+            font-weight: 700;
+        }
+
+        .logo i {
+            font-size: 24px;
+        }
+
+        .nav-right {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .admin-label {
+            color: #555;
+            font-size: 14px;
+        }
+
+        .admin-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: #eeeaff;
+            color: #6c63ff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* ================= PAGE ================= */
+
+        .container {
+            width: 90%;
+            max-width: 1400px;
+            margin: 35px auto;
+        }
+
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            text-decoration: none;
+            color: #6c63ff;
+            font-size: 14px;
+            font-weight: 500;
+            margin-bottom: 18px;
+        }
+
+        .page-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 25px;
+        }
+
+        .page-header h1 {
+            font-size: 28px;
+            margin-bottom: 5px;
+        }
+
+        .page-header p {
+            color: #777;
+            font-size: 14px;
+        }
+
+        .add-btn {
+            background: #6c63ff;
+            color: white;
+            border: none;
+            padding: 12px 20px;
+            border-radius: 9px;
+            font-family: inherit;
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        .add-btn:hover {
+            background: #574fd6;
+        }
+
+        .add-btn i {
+            margin-right: 7px;
+        }
+
+        /* ================= FILTER AREA ================= */
+
+        .filter-box {
+            background: white;
+            border-radius: 14px;
+            padding: 18px;
+            display: flex;
+            gap: 15px;
+            align-items: center;
+            flex-wrap: wrap;
+            margin-bottom: 20px;
+            box-shadow: 0 3px 15px rgba(0,0,0,0.04);
+        }
+
+        .search-box {
+            position: relative;
+            flex: 1;
+            min-width: 240px;
+        }
+
+        .search-box i {
+            position: absolute;
+            left: 14px;
+            top: 14px;
+            color: #999;
+        }
+
+        .search-box input {
+            width: 100%;
+            height: 44px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            padding: 0 15px 0 40px;
+            outline: none;
+            font-family: inherit;
+            font-size: 13px;
+        }
+
+        .search-box input:focus {
+            border-color: #6c63ff;
+        }
+
+        .filter-select {
+            height: 44px;
+            min-width: 170px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            padding: 0 12px;
+            font-family: inherit;
+            font-size: 13px;
+            outline: none;
+            background: white;
+        }
+
+        .filter-select:focus {
+            border-color: #6c63ff;
+        }
+
+        /* ================= TABLE ================= */
+
+        .table-card {
+            background: white;
+            border-radius: 14px;
+            overflow-x: auto;
+            box-shadow: 0 3px 15px rgba(0,0,0,0.04);
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            min-width: 1050px;
+        }
+
+        thead {
+            background: #fafaff;
+        }
+
+        th {
+            text-align: left;
+            padding: 17px 18px;
+            font-size: 12px;
+            color: #777;
+            font-weight: 600;
+            border-bottom: 1px solid #eee;
+            white-space: nowrap;
+        }
+
+        td {
+            padding: 17px 18px;
+            font-size: 13px;
+            border-bottom: 1px solid #f0f0f0;
+            vertical-align: middle;
+        }
+
+        tbody tr:hover {
+            background: #fafaff;
+        }
+
+        .appointment-id {
+            color: #6c63ff;
+            font-weight: 600;
+        }
+
+        .customer-name {
+            font-weight: 600;
+            color: #333;
+        }
+
+        .customer-email {
+            color: #888;
+            font-size: 11px;
+            margin-top: 3px;
+        }
+
+        .service-name {
+            font-weight: 500;
+        }
+
+        .amount {
+            font-weight: 600;
+        }
+
+        /* ================= STATUS ================= */
+
+        .status {
+            display: inline-block;
+            padding: 6px 11px;
+            border-radius: 20px;
+            font-size: 11px;
+            font-weight: 600;
+        }
+
+        .confirmed {
+            background: #e8f8ef;
+            color: #219653;
+        }
+
+        .completed {
+            background: #eaf0ff;
+            color: #4565d4;
+        }
+
+        .pending {
+            background: #fff5dc;
+            color: #c58a00;
+        }
+
+        .cancelled {
+            background: #ffe9ec;
+            color: #d6455d;
+        }
+
+        /* ================= ACTIONS ================= */
+
+        .actions {
+            display: flex;
+            gap: 7px;
+        }
+
+        .action-btn {
+            width: 32px;
+            height: 32px;
+            border: none;
+            border-radius: 7px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: 0.2s;
+        }
+
+        .view-btn {
+            background: #eeeaff;
+            color: #6c63ff;
+        }
+
+        .edit-btn {
+            background: #fff5df;
+            color: #d69a00;
+        }
+
+        .delete-btn {
+            background: #ffe9ec;
+            color: #d6455d;
+        }
+
+        .action-btn:hover {
+            transform: translateY(-2px);
+        }
+
+        /* ================= FOOTER INFO ================= */
+
+        .table-footer {
+            padding: 16px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            color: #888;
+            font-size: 13px;
+        }
+
+        /* ================= RESPONSIVE ================= */
+
+        @media (max-width: 768px) {
+
+            .navbar {
+                padding: 0 4%;
+            }
+
+            .admin-label {
+                display: none;
+            }
+
+            .container {
+                width: 94%;
+                margin: 25px auto;
+            }
+
+            .page-header {
+                align-items: flex-start;
+                gap: 15px;
+            }
+
+            .page-header h1 {
+                font-size: 23px;
+            }
+
+            .add-btn {
+                padding: 10px 14px;
+            }
+
+            .filter-box {
+                flex-direction: column;
+                align-items: stretch;
+            }
+
+            .search-box {
+                width: 100%;
+            }
+
+            .filter-select {
+                width: 100%;
+            }
+
+            .table-footer {
+                flex-direction: column;
+                gap: 8px;
+                align-items: flex-start;
+            }
+        }
+
+    </style>
+</head>
+
+<body>
+
+    <!-- ================= NAVBAR ================= -->
+
+    <nav class="navbar">
+
+        <a href="admin.html" class="logo">
+            <i class="fa-solid fa-scissors"></i>
+            SalonEase
+        </a>
+
+        <div class="nav-right">
+
+            <span class="admin-label">
+                Administrator
+            </span>
+
+            <div class="admin-icon">
+                <i class="fa-solid fa-user-shield"></i>
+            </div>
+
+        </div>
+
+    </nav>
+
+
+    <!-- ================= MAIN ================= -->
+
+    <main class="container">
+
+        <a href="admin.html" class="back-link">
+            <i class="fa-solid fa-arrow-left"></i>
+            Back to Admin Dashboard
+        </a>
+
+
+        <!-- PAGE HEADER -->
+
+        <div class="page-header">
+
+            <div>
+
+                <h1>Appointments</h1>
+
+                <p>
+                    Manage customer appointments and booking status.
+                </p>
+
+            </div>
+
+            <button class="add-btn" onclick="addAppointment()">
+                <i class="fa-solid fa-plus"></i>
+                Add Appointment
+            </button>
+
+        </div>
+
+
+        <!-- FILTERS -->
+
+        <div class="filter-box">
+
+            <div class="search-box">
+
+                <i class="fa-solid fa-magnifying-glass"></i>
+
+                <input
+                    type="text"
+                    id="searchInput"
+                    placeholder="Search by customer, appointment ID or service..."
+                    onkeyup="searchAppointments()"
+                >
+
+            </div>
+
+
+            <select
+                id="statusFilter"
+                class="filter-select"
+                onchange="filterAppointments()"
+            >
+
+                <option value="all">
+                    All Status
+                </option>
+
+                <option value="confirmed">
+                    Confirmed
+                </option>
+
+                <option value="pending">
+                    Pending
+                </option>
+
+                <option value="completed">
+                    Completed
+                </option>
+
+                <option value="cancelled">
+                    Cancelled
+                </option>
+
+            </select>
+
+        </div>
+
+
+        <!-- APPOINTMENTS TABLE -->
+
+        <div class="table-card">
+
+            <table>
+
+                <thead>
+
+                    <tr>
+
+                        <th>Appointment ID</th>
+
+                        <th>Customer</th>
+
+                        <th>Service</th>
+
+                        <th>Stylist</th>
+
+                        <th>Date & Time</th>
+
+                        <th>Amount</th>
+
+                        <th>Status</th>
+
+                        <th>Actions</th>
+
+                    </tr>
+
+                </thead>
+
+
+                <tbody id="appointmentTable">
+
+                    <!-- APPOINTMENT 1 -->
+
+                    <tr data-status="confirmed">
+
+                        <td>
+                            <span class="appointment-id">
+                                #APT1025
+                            </span>
+                        </td>
+
+                        <td>
+
+                            <div class="customer-name">
+                                Adwaith S
+                            </div>
+
+                            <div class="customer-email">
+                                adwaith@example.com
+                            </div>
+
+                        </td>
+
+                        <td>
+
+                            <span class="service-name">
+                                Hair Spa
+                            </span>
+
+                        </td>
+
+                        <td>
+                            Anjali
+                        </td>
+
+                        <td>
+                            08 Oct 2026<br>
+                            <span style="color:#888;">
+                                04:00 PM
+                            </span>
+                        </td>
+
+                        <td>
+                            <span class="amount">
+                                ₹900
+                            </span>
+                        </td>
+
+                        <td>
+
+                            <span class="status confirmed">
+                                Confirmed
+                            </span>
+
+                        </td>
+
+                        <td>
+
+                            <div class="actions">
+
+                                <button
+                                    class="action-btn view-btn"
+                                    onclick="viewAppointment('APT1025')"
+                                    title="View"
+                                >
+                                    <i class="fa-solid fa-eye"></i>
+                                </button>
+
+                                <button
+                                    class="action-btn edit-btn"
+                                    onclick="editAppointment('APT1025')"
+                                    title="Edit"
+                                >
+                                    <i class="fa-solid fa-pen"></i>
+                                </button>
+
+                                <button
+                                    class="action-btn delete-btn"
+                                    onclick="deleteAppointment('APT1025')"
+                                    title="Delete"
+                                >
+                                    <i class="fa-solid fa-trash"></i>
+                                </button>
+
+                            </div>
+
+                        </td>
+
+                    </tr>
+
+
+                    <!-- APPOINTMENT 2 -->
+
+                    <tr data-status="completed">
+
+                        <td>
+                            <span class="appointment-id">
+                                #APT1021
+                            </span>
+                        </td>
+
+                        <td>
+
+                            <div class="customer-name">
+                                Riya Rakhesh
+                            </div>
+
+                            <div class="customer-email">
+                                riya@example.com
+                            </div>
+
+                        </td>
+
+                        <td>
+                            <span class="service-name">
+                                Haircut
+                            </span>
+                        </td>
+
+                        <td>
+                            Rahul
+                        </td>
+
+                        <td>
+                            25 Sep 2026<br>
+                            <span style="color:#888;">
+                                11:00 AM
+                            </span>
+                        </td>
+
+                        <td>
+                            <span class="amount">
+                                ₹350
+                            </span>
+                        </td>
+
+                        <td>
+
+                            <span class="status completed">
+                                Completed
+                            </span>
+
+                        </td>
+
+                        <td>
+
+                            <div class="actions">
+
+                                <button
+                                    class="action-btn view-btn"
+                                    onclick="viewAppointment('APT1021')"
+                                >
+                                    <i class="fa-solid fa-eye"></i>
+                                </button>
+
+                                <button
+                                    class="action-btn edit-btn"
+                                    onclick="editAppointment('APT1021')"
+                                >
+                                    <i class="fa-solid fa-pen"></i>
+                                </button>
+
+                                <button
+                                    class="action-btn delete-btn"
+                                    onclick="deleteAppointment('APT1021')"
+                                >
+                                    <i class="fa-solid fa-trash"></i>
+                                </button>
+
+                            </div>
+
+                        </td>
+
+                    </tr>
+
+
+                    <!-- APPOINTMENT 3 -->
+
+                    <tr data-status="completed">
+
+                        <td>
+                            <span class="appointment-id">
+                                #APT1018
+                            </span>
+                        </td>
+
+                        <td>
+
+                            <div class="customer-name">
+                                Siddharth Prajoth
+                            </div>
+
+                            <div class="customer-email">
+                                siddharth@example.com
+                            </div>
+
+                        </td>
+
+                        <td>
+                            <span class="service-name">
+                                Facial
+                            </span>
+                        </td>
+
+                        <td>
+                            Meera
+                        </td>
+
+                        <td>
+                            18 Sep 2026<br>
+                            <span style="color:#888;">
+                                02:30 PM
+                            </span>
+                        </td>
+
+                        <td>
+                            <span class="amount">
+                                ₹700
+                            </span>
+                        </td>
+
+                        <td>
+
+                            <span class="status completed">
+                                Completed
+                            </span>
+
+                        </td>
+
+                        <td>
+
+                            <div class="actions">
+
+                                <button
+                                    class="action-btn view-btn"
+                                    onclick="viewAppointment('APT1018')"
+                                >
+                                    <i class="fa-solid fa-eye"></i>
+                                </button>
+
+                                <button
+                                    class="action-btn edit-btn"
+                                    onclick="editAppointment('APT1018')"
+                                >
+                                    <i class="fa-solid fa-pen"></i>
+                                </button>
+
+                                <button
+                                    class="action-btn delete-btn"
+                                    onclick="deleteAppointment('APT1018')"
+                                >
+                                    <i class="fa-solid fa-trash"></i>
+                                </button>
+
+                            </div>
+
+                        </td>
+
+                    </tr>
+
+
+                    <!-- APPOINTMENT 4 -->
+
+                    <tr data-status="pending">
+
+                        <td>
+                            <span class="appointment-id">
+                                #APT1030
+                            </span>
+                        </td>
+
+                        <td>
+
+                            <div class="customer-name">
+                                Kailas H
+                            </div>
+
+                            <div class="customer-email">
+                                kailas@example.com
+                            </div>
+
+                        </td>
+
+                        <td>
+                            <span class="service-name">
+                                Manicure
+                            </span>
+                        </td>
+
+                        <td>
+                            Anjali
+                        </td>
+
+                        <td>
+                            10 Oct 2026<br>
+                            <span style="color:#888;">
+                                03:00 PM
+                            </span>
+                        </td>
+
+                        <td>
+                            <span class="amount">
+                                ₹600
+                            </span>
+                        </td>
+
+                        <td>
+
+                            <span class="status pending">
+                                Pending
+                            </span>
+
+                        </td>
+
+                        <td>
+
+                            <div class="actions">
+
+                                <button
+                                    class="action-btn view-btn"
+                                    onclick="viewAppointment('APT1030')"
+                                >
+                                    <i class="fa-solid fa-eye"></i>
+                                </button>
+
+                                <button
+                                    class="action-btn edit-btn"
+                                    onclick="editAppointment('APT1030')"
+                                >
+                                    <i class="fa-solid fa-pen"></i>
+                                </button>
+
+                                <button
+                                    class="action-btn delete-btn"
+                                    onclick="deleteAppointment('APT1030')"
+                                >
+                                    <i class="fa-solid fa-trash"></i>
+                                </button>
+
+                            </div>
+
+                        </td>
+
+                    </tr>
+
+
+                    <!-- APPOINTMENT 5 -->
+
+                    <tr data-status="cancelled">
+
+                        <td>
+                            <span class="appointment-id">
+                                #APT1012
+                            </span>
+                        </td>
+
+                        <td>
+
+                            <div class="customer-name">
+                                Ananya Nair
+                            </div>
+
+                            <div class="customer-email">
+                                ananya@example.com
+                            </div>
+
+                        </td>
+
+                        <td>
+                            <span class="service-name">
+                                Hair Coloring
+                            </span>
+                        </td>
+
+                        <td>
+                            Rahul
+                        </td>
+
+                        <td>
+                            02 Sep 2026<br>
+                            <span style="color:#888;">
+                                05:00 PM
+                            </span>
+                        </td>
+
+                        <td>
+                            <span class="amount">
+                                ₹1,500
+                            </span>
+                        </td>
+
+                        <td>
+
+                            <span class="status cancelled">
+                                Cancelled
+                            </span>
+
+                        </td>
+
+                        <td>
+
+                            <div class="actions">
+
+                                <button
+                                    class="action-btn view-btn"
+                                    onclick="viewAppointment('APT1012')"
+                                >
+                                    <i class="fa-solid fa-eye"></i>
+                                </button>
+
+                                <button
+                                    class="action-btn edit-btn"
+                                    onclick="editAppointment('APT1012')"
+                                >
+                                    <i class="fa-solid fa-pen"></i>
+                                </button>
+
+                                <button
+                                    class="action-btn delete-btn"
+                                    onclick="deleteAppointment('APT1012')"
+                                >
+                                    <i class="fa-solid fa-trash"></i>
+                                </button>
+
+                            </div>
+
+                        </td>
+
+                    </tr>
+
+
+                    <!-- APPOINTMENT 6 -->
+
+                    <tr data-status="confirmed">
+
+                        <td>
+                            <span class="appointment-id">
+                                #APT1028
+                            </span>
+                        </td>
+
+                        <td>
+
+                            <div class="customer-name">
+                                Vishnu M
+                            </div>
+
+                            <div class="customer-email">
+                                vishnu@example.com
+                            </div>
+
+                        </td>
+
+                        <td>
+                            <span class="service-name">
+                                Pedicure
+                            </span>
+                        </td>
+
+                        <td>
+                            Arjun
+                        </td>
+
+                        <td>
+                            09 Oct 2026<br>
+                            <span style="color:#888;">
+                                12:00 PM
+                            </span>
+                        </td>
+
+                        <td>
+                            <span class="amount">
+                                ₹650
+                            </span>
+                        </td>
+
+                        <td>
+
+                            <span class="status confirmed">
+                                Confirmed
+                            </span>
+
+                        </td>
+
+                        <td>
+
+                            <div class="actions">
+
+                                <button
+                                    class="action-btn view-btn"
+                                    onclick="viewAppointment('APT1028')"
+                                >
+                                    <i class="fa-solid fa-eye"></i>
+                                </button>
+
+                                <button
+                                    class="action-btn edit-btn"
+                                    onclick="editAppointment('APT1028')"
+                                >
+                                    <i class="fa-solid fa-pen"></i>
+                                </button>
+
+                                <button
+                                    class="action-btn delete-btn"
+                                    onclick="deleteAppointment('APT1028')"
+                                >
+                                    <i class="fa-solid fa-trash"></i>
+                                </button>
+
+                            </div>
+
+                        </td>
+
+                    </tr>
+
+                </tbody>
+
+            </table>
+
+
+            <div class="table-footer">
+
+                <span id="appointmentCount">
+                    Showing 6 appointments
+                </span>
+
+                <span>
+                    SalonEase Admin Panel
+                </span>
+
+            </div>
+
+        </div>
+
+    </main>
+
+
+    <!-- ================= JAVASCRIPT ================= -->
+
+    <script>
+
+       let allAppointments = [];
+
+
+document.addEventListener("DOMContentLoaded", function () {
+    loadAppointments();
+});
+
+
+async function loadAppointments() {
+
+    try {
+
+        const response =
+            await fetch("/api/admin/appointments");
+
+        const data =
+            await response.json();
+
+
+        if (!data.success) {
+
+            alert(
+                "Unable to load appointments.\n\n" +
+                data.message
+            );
+
+            return;
+        }
+
+
+        allAppointments =
+            data.appointments || [];
+
+
+        displayAppointments(
+            allAppointments
+        );
+
+
+    } catch (error) {
+
+        console.error(
+            "Appointment loading error:",
+            error
+        );
+
+        alert(
+            "Unable to connect to the SalonEase server.\n\n" +
+            "Please make sure the server is running."
+        );
+
+    }
+
+}
+
+
+function displayAppointments(appointments) {
+
+    const tbody =
+        document.getElementById(
+            "appointmentTable"
+        );
+
+
+    if (appointments.length === 0) {
+
+        tbody.innerHTML = `
+            <tr>
+                <td colspan="8"
+                    style="text-align:center; padding:30px;">
+                    No appointments found.
+                </td>
+            </tr>
+        `;
+
+        updateCount(0);
+
+        return;
+    }
+
+
+    tbody.innerHTML =
+        appointments.map(function (appointment) {
+
+            const status =
+                appointment.status || "Pending";
+
+
+            const statusClass =
+                status.toLowerCase();
+
+
+            // Format date safely
+
+            const dateString =
+                String(
+                    appointment.appointment_date
+                ).substring(0, 10);
+
+
+            const dateParts =
+                dateString.split("-");
+
+
+            const date =
+                new Date(
+                    Number(dateParts[0]),
+                    Number(dateParts[1]) - 1,
+                    Number(dateParts[2])
+                );
+
+
+            const formattedDate =
+                date.toLocaleDateString(
+                    "en-IN",
+                    {
+                        day: "2-digit",
+                        month: "short",
+                        year: "numeric"
+                    }
+                );
+
+
+            // Format time
+
+            const timeParts =
+                String(
+                    appointment.appointment_time
+                ).split(":");
+
+
+            let hours =
+                Number(timeParts[0]);
+
+
+            const minutes =
+                timeParts[1];
+
+
+            const ampm =
+                hours >= 12
+                    ? "PM"
+                    : "AM";
+
+
+            hours =
+                hours % 12 || 12;
+
+
+            const formattedTime =
+                String(hours).padStart(2, "0") +
+                ":" +
+                minutes +
+                " " +
+                ampm;
+
+
+            return `
+
+                <tr data-status="${statusClass}">
+
+                    <td>
+
+                        <span class="appointment-id">
+                            #APT${String(
+                                appointment.appointment_id
+                            ).padStart(4, "0")}
+                        </span>
+
+                    </td>
+
+
+                    <td>
+
+                        <div class="customer-name">
+                            ${appointment.customer_name}
+                        </div>
+
+                        <div class="customer-email">
+                            ${appointment.customer_email}
+                        </div>
+
+                    </td>
+
+
+                    <td>
+
+                        <span class="service-name">
+                            ${appointment.service_name}
+                        </span>
+
+                    </td>
+
+
+                    <td>
+                        ${appointment.employee_name}
+                    </td>
+
+
+                    <td>
+
+                        ${formattedDate}
+
+                        <br>
+
+                        <span style="color:#888;">
+                            ${formattedTime}
+                        </span>
+
+                    </td>
+
+
+                    <td>
+
+                        <span class="amount">
+                            ₹${Number(
+                                appointment.amount
+                            ).toLocaleString("en-IN")}
+                        </span>
+
+                    </td>
+
+
+                    <td>
+
+                        <span class="status ${statusClass}">
+                            ${status}
+                        </span>
+
+                    </td>
+
+
+                    <td>
+
+                        <div class="actions">
+
+                            <button
+                                class="action-btn view-btn"
+                                onclick="viewAppointment(${appointment.appointment_id})"
+                                title="View"
+                            >
+                                <i class="fa-solid fa-eye"></i>
+                            </button>
+
+
+                            <button
+                                class="action-btn edit-btn"
+                                onclick="editAppointment(${appointment.appointment_id})"
+                                title="Edit"
+                            >
+                                <i class="fa-solid fa-pen"></i>
+                            </button>
+
+
+                            <button
+                                class="action-btn delete-btn"
+                                onclick="deleteAppointment(${appointment.appointment_id})"
+                                title="Delete"
+                            >
+                                <i class="fa-solid fa-trash"></i>
+                            </button>
+
+                        </div>
+
+                    </td>
+
+                </tr>
+
+            `;
+
+        }).join("");
+
+
+    updateCount(
+        appointments.length
+    );
+
+}
+
+
+function searchAppointments() {
+
+    applyFilters();
+
+}
+
+
+function filterAppointments() {
+
+    applyFilters();
+
+}
+
+
+function applyFilters() {
+
+    const searchInput =
+        document.getElementById(
+            "searchInput"
+        )
+        .value
+        .toLowerCase()
+        .trim();
+
+
+    const statusFilter =
+        document.getElementById(
+            "statusFilter"
+        ).value;
+
+
+    const filteredAppointments =
+        allAppointments.filter(
+            function (appointment) {
+
+                const searchText =
+
+                    String(
+                        appointment.appointment_id
+                    ).toLowerCase()
+
+                    + " " +
+
+                    String(
+                        appointment.customer_name
+                    ).toLowerCase()
+
+                    + " " +
+
+                    String(
+                        appointment.customer_email
+                    ).toLowerCase()
+
+                    + " " +
+
+                    String(
+                        appointment.service_name
+                    ).toLowerCase()
+
+                    + " " +
+
+                    String(
+                        appointment.employee_name
+                    ).toLowerCase();
+
+
+                const matchesSearch =
+                    searchText.includes(
+                        searchInput
+                    );
+
+
+                const matchesStatus =
+                    statusFilter === "all" ||
+                    String(
+                        appointment.status
+                    ).toLowerCase() ===
+                    statusFilter;
+
+
+                return (
+                    matchesSearch &&
+                    matchesStatus
+                );
+
+            }
+        );
+
+
+    displayAppointments(
+        filteredAppointments
+    );
+
+}
+
+
+function updateCount(count) {
+
+    document.getElementById(
+        "appointmentCount"
+    ).innerText =
+
+        "Showing " +
+        count +
+        " appointment" +
+        (count !== 1 ? "s" : "");
+
+}
+
+
+function viewAppointment(appointmentId) {
+
+    const appointment =
+        allAppointments.find(
+            function (item) {
+
+                return (
+                    item.appointment_id ===
+                    appointmentId
+                );
+
+            }
+        );
+
+
+    if (!appointment) {
+
+        alert(
+            "Appointment not found."
+        );
+
+        return;
+    }
+
+
+    alert(
+
+        "Appointment Details\n\n" +
+
+        "Appointment ID: #APT" +
+        String(
+            appointment.appointment_id
+        ).padStart(4, "0") +
+
+        "\nCustomer: " +
+        appointment.customer_name +
+
+        "\nEmail: " +
+        appointment.customer_email +
+
+        "\nService: " +
+        appointment.service_name +
+
+        "\nStylist: " +
+        appointment.employee_name +
+
+        "\nDate: " +
+        String(
+            appointment.appointment_date
+        ).substring(0, 10) +
+
+        "\nTime: " +
+        appointment.appointment_time +
+
+        "\nAmount: ₹" +
+        Number(
+            appointment.amount
+        ).toLocaleString("en-IN") +
+
+        "\nStatus: " +
+        appointment.status +
+
+        "\nNotes: " +
+        (appointment.notes || "None")
+
+    );
+
+}
+
+
+async function editAppointment(appointmentId) {
+    const appointment = allAppointments.find(function (item) {
+        return item.appointment_id === appointmentId;
+    });
+
+    if (!appointment) {
+        alert("Appointment not found.");
+        return;
+    }
+
+    const customerId = prompt(
+        "Enter Customer ID:",
+        appointment.customer_id
+    );
+    if (customerId === null) return;
+
+    const employeeId = prompt(
+        "Enter Employee ID:",
+        appointment.employee_id
+    );
+    if (employeeId === null) return;
+
+    const serviceId = prompt(
+        "Enter Service ID:",
+        appointment.service_id
+    );
+    if (serviceId === null) return;
+
+    const appointmentDate = prompt(
+        "Enter appointment date (YYYY-MM-DD):",
+        String(appointment.appointment_date).substring(0, 10)
+    );
+    if (appointmentDate === null) return;
+
+    const appointmentTime = prompt(
+        "Enter appointment time (HH:MM):",
+        appointment.appointment_time.substring(0, 5)
+    );
+    if (appointmentTime === null) return;
+
+    const status = prompt(
+        "Enter status (Pending, Confirmed, Completed, Cancelled):",
+        appointment.status
+    );
+    if (status === null) return;
+
+    const amount = prompt(
+        "Enter appointment amount:",
+        appointment.amount
+    );
+    if (amount === null) return;
+
+    const notes = prompt(
+        "Enter notes:",
+        appointment.notes || ""
+    );
+    if (notes === null) return;
+
+    // Basic validation
+    if (
+        customerId.trim() === "" ||
+        employeeId.trim() === "" ||
+        serviceId.trim() === "" ||
+        appointmentDate.trim() === "" ||
+        appointmentTime.trim() === "" ||
+        status.trim() === ""
+    ) {
+        alert("All required fields must be filled.");
+        return;
+    }
+
+    if (isNaN(customerId) || isNaN(employeeId) || isNaN(serviceId)) {
+        alert("Customer ID, Employee ID and Service ID must be numbers.");
+        return;
+    }
+
+    if (isNaN(amount) || Number(amount) < 0) {
+        alert("Please enter a valid amount.");
+        return;
+    }
+
+    const validStatuses = [
+        "Pending",
+        "Confirmed",
+        "Completed",
+        "Cancelled"
+    ];
+
+    if (!validStatuses.includes(status.trim())) {
+        alert(
+            "Invalid status.\n\nUse only:\n" +
+            "Pending\n" +
+            "Confirmed\n" +
+            "Completed\n" +
+            "Cancelled"
+        );
+        return;
+    }
+
+    try {
+        const response = await fetch(
+            "/api/admin/appointments/" + appointmentId,
+            {
+                method: "PUT",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({
+                    customer_id: Number(customerId),
+                    employee_id: Number(employeeId),
+                    service_id: Number(serviceId),
+                    appointment_date: appointmentDate.trim(),
+                    appointment_time: appointmentTime.trim(),
+                    status: status.trim(),
+                    amount: Number(amount),
+                    notes: notes.trim()
+                })
+            }
+        );
+
+        const data = await response.json();
+
+        if (!data.success) {
+            alert(
+                "Unable to update appointment.\n\n" +
+                data.message
+            );
+            return;
+        }
+
+        alert("Appointment updated successfully!");
+
+        // Reload the appointments from PostgreSQL
+        await loadAppointments();
+
+    } catch (error) {
+        console.error("Edit appointment error:", error);
+
+        alert(
+            "Unable to connect to the SalonEase server.\n\n" +
+            "Please make sure the server is running."
+        );
+    }
+}
+
+async function deleteAppointment(appointmentId) {
+    const appointment = allAppointments.find(function (item) {
+        return item.appointment_id === appointmentId;
+    });
+
+    if (!appointment) {
+        alert("Appointment not found.");
+        return;
+    }
+
+    const confirmation = confirm(
+        "Are you sure you want to delete appointment #APT" +
+        String(appointmentId).padStart(4, "0") +
+        "?\n\n" +
+        "Customer: " + appointment.customer_name +
+        "\nService: " + appointment.service_name +
+        "\nDate: " +
+        String(appointment.appointment_date).substring(0, 10) +
+        "\n\nThis action cannot be undone."
+    );
+
+    if (!confirmation) {
+        return;
+    }
+
+    try {
+        const response = await fetch(
+            "/api/admin/appointments/" + appointmentId,
+            {
+                method: "DELETE"
+            }
+        );
+
+        const data = await response.json();
+
+        if (!data.success) {
+            alert(
+                "Unable to delete appointment.\n\n" +
+                data.message
+            );
+            return;
+        }
+
+        alert(
+            "Appointment #APT" +
+            String(appointmentId).padStart(4, "0") +
+            " deleted successfully!"
+        );
+
+        // Reload appointments from PostgreSQL
+        await loadAppointments();
+
+    } catch (error) {
+        console.error("Delete appointment error:", error);
+
+        alert(
+            "Unable to connect to the SalonEase server.\n\n" +
+            "Please make sure the server is running."
+        );
+    }
+}
+
+async function addAppointment() {
+
+    const customerId = prompt(
+        "Enter Customer ID:"
+    );
+    if (customerId === null) return;
+
+    const employeeId = prompt(
+        "Enter Employee ID:"
+    );
+    if (employeeId === null) return;
+
+    const serviceId = prompt(
+        "Enter Service ID:"
+    );
+    if (serviceId === null) return;
+
+    const appointmentDate = prompt(
+        "Enter appointment date (YYYY-MM-DD):"
+    );
+    if (appointmentDate === null) return;
+
+    const appointmentTime = prompt(
+        "Enter appointment time (HH:MM):"
+    );
+    if (appointmentTime === null) return;
+
+    const status = prompt(
+        "Enter status (Pending, Confirmed, Completed, Cancelled):",
+        "Pending"
+    );
+    if (status === null) return;
+
+    const amount = prompt(
+        "Enter appointment amount:"
+    );
+    if (amount === null) return;
+
+    const notes = prompt(
+        "Enter notes (optional):",
+        ""
+    );
+    if (notes === null) return;
+
+
+    // Validation
+
+    if (
+        customerId.trim() === "" ||
+        employeeId.trim() === "" ||
+        serviceId.trim() === "" ||
+        appointmentDate.trim() === "" ||
+        appointmentTime.trim() === "" ||
+        status.trim() === "" ||
+        amount.trim() === ""
+    ) {
+        alert("All required fields must be filled.");
+        return;
+    }
+
+
+    if (
+        isNaN(customerId) ||
+        isNaN(employeeId) ||
+        isNaN(serviceId)
+    ) {
+        alert(
+            "Customer ID, Employee ID and Service ID must be numbers."
+        );
+        return;
+    }
+
+
+    if (
+        isNaN(amount) ||
+        Number(amount) < 0
+    ) {
+        alert(
+            "Please enter a valid amount."
+        );
+        return;
+    }
+
+
+    const validStatuses = [
+        "Pending",
+        "Confirmed",
+        "Completed",
+        "Cancelled"
+    ];
+
+    if (!validStatuses.includes(status.trim())) {
+        alert(
+            "Invalid status.\n\n" +
+            "Use only:\n" +
+            "Pending\n" +
+            "Confirmed\n" +
+            "Completed\n" +
+            "Cancelled"
+        );
+        return;
+    }
+
+
+    try {
+
+        const response = await fetch(
+            "/api/admin/appointments",
+            {
+                method: "POST",
+
+                headers: {
+                    "Content-Type": "application/json"
+                },
+
+                body: JSON.stringify({
+
+                    customer_id: Number(customerId),
+
+                    employee_id: Number(employeeId),
+
+                    service_id: Number(serviceId),
+
+                    appointment_date:
+                        appointmentDate.trim(),
+
+                    appointment_time:
+                        appointmentTime.trim(),
+
+                    status:
+                        status.trim(),
+
+                    amount:
+                        Number(amount),
+
+                    notes:
+                        notes.trim()
+
+                })
+            }
+        );
+
+
+        const data =
+            await response.json();
+
+
+        if (!data.success) {
+
+            alert(
+                "Unable to add appointment.\n\n" +
+                data.message
+            );
+
+            return;
+        }
+
+
+        alert(
+            "Appointment added successfully!"
+        );
+
+
+        // Reload appointments from PostgreSQL
+
+        await loadAppointments();
+
+
+    } catch (error) {
+
+        console.error(
+            "Add appointment error:",
+            error
+        );
+
+        alert(
+            "Unable to connect to the SalonEase server.\n\n" +
+            "Please make sure the server is running."
+        );
+    }
+}
+
+
+    </script>
+
+</body>
+</html>

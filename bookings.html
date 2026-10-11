@@ -1,0 +1,1231 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>My Bookings | SalonEase</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap"
+          rel="stylesheet">
+
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+
+    <style>
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: "Poppins", sans-serif;
+        }
+
+        body {
+            background: #f5f6fa;
+            color: #2d2d3a;
+        }
+
+        /* ================= NAVBAR ================= */
+
+        nav {
+            height: 75px;
+            background: white;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 7%;
+            box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+        }
+
+        .logo {
+            font-size: 25px;
+            font-weight: 700;
+            color: #6c63ff;
+            text-decoration: none;
+        }
+
+        .logo i {
+            margin-right: 8px;
+        }
+
+        .nav-links {
+            display: flex;
+            align-items: center;
+            gap: 28px;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: #555;
+            font-size: 14px;
+            font-weight: 500;
+        }
+
+        .nav-links a:hover {
+            color: #6c63ff;
+        }
+
+        .nav-links .active {
+            color: #6c63ff;
+            font-weight: 600;
+        }
+
+        .profile-btn {
+            background: #6c63ff;
+            color: white !important;
+            padding: 10px 18px;
+            border-radius: 8px;
+        }
+
+        /* ================= PAGE ================= */
+
+        .page {
+            padding: 45px 7%;
+            max-width: 1250px;
+            margin: auto;
+        }
+
+        .page-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+        }
+
+        .page-header h1 {
+            font-size: 30px;
+            margin-bottom: 6px;
+        }
+
+        .page-header p {
+            color: #777;
+            font-size: 14px;
+        }
+
+        .new-booking-btn {
+            background: #6c63ff;
+            color: white;
+            text-decoration: none;
+            padding: 12px 20px;
+            border-radius: 9px;
+            font-size: 13px;
+            font-weight: 600;
+        }
+
+        .new-booking-btn:hover {
+            background: #5951e8;
+        }
+
+        /* ================= SECTION ================= */
+
+        .section {
+            margin-bottom: 40px;
+        }
+
+        .section-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 18px;
+        }
+
+        .section-header h2 {
+            font-size: 19px;
+        }
+
+        .section-header span {
+            color: #888;
+            font-size: 12px;
+        }
+
+        /* ================= UPCOMING CARD ================= */
+
+        .upcoming-card {
+            background: white;
+            border-radius: 16px;
+            padding: 25px;
+            box-shadow: 0 5px 25px rgba(0,0,0,0.06);
+            display: grid;
+            grid-template-columns: 80px 1fr auto;
+            gap: 22px;
+            align-items: center;
+        }
+
+        .date-box {
+            width: 70px;
+            height: 75px;
+            border-radius: 12px;
+            background: #f0efff;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            color: #6c63ff;
+        }
+
+        .date-box .month {
+            font-size: 11px;
+            font-weight: 600;
+            text-transform: uppercase;
+        }
+
+        .date-box .day {
+            font-size: 26px;
+            font-weight: 700;
+        }
+
+        .booking-info h3 {
+            font-size: 17px;
+            margin-bottom: 7px;
+        }
+
+        .booking-info p {
+            color: #777;
+            font-size: 12px;
+            margin: 4px 0;
+        }
+
+        .booking-info i {
+            width: 18px;
+            color: #6c63ff;
+        }
+
+        .booking-meta {
+            text-align: right;
+        }
+
+        .status {
+            display: inline-block;
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 11px;
+            font-weight: 600;
+        }
+
+        .confirmed {
+            background: #e9f9ef;
+            color: #20a05a;
+        }
+
+        .pending {
+            background: #fff6df;
+            color: #c58a00;
+        }
+
+        .completed {
+            background: #eeeef2;
+            color: #666;
+        }
+
+        .cancelled {
+            background: #ffecef;
+            color: #e34d68;
+        }
+
+        .amount {
+            font-size: 17px;
+            font-weight: 700;
+            margin-top: 10px;
+        }
+
+        .booking-id {
+            font-size: 10px;
+            color: #999;
+            margin-top: 4px;
+        }
+
+        /* ================= HISTORY ================= */
+
+        .history-card {
+            background: white;
+            border-radius: 16px;
+            box-shadow: 0 5px 25px rgba(0,0,0,0.06);
+            overflow: hidden;
+        }
+
+        .booking-row {
+            display: grid;
+            grid-template-columns: 1.4fr 1fr 1fr 0.8fr 0.8fr;
+            align-items: center;
+            padding: 20px 25px;
+            border-bottom: 1px solid #eee;
+        }
+
+        .booking-row:last-child {
+            border-bottom: none;
+        }
+
+        .table-heading {
+            background: #fafaff;
+            color: #777;
+            font-size: 11px;
+            font-weight: 600;
+            text-transform: uppercase;
+        }
+
+        .service-name {
+            font-size: 13px;
+            font-weight: 600;
+        }
+
+        .service-name small {
+            display: block;
+            color: #999;
+            font-size: 10px;
+            font-weight: 400;
+            margin-top: 3px;
+        }
+
+        .row-text {
+            font-size: 12px;
+            color: #555;
+        }
+
+        .row-amount {
+            font-size: 13px;
+            font-weight: 600;
+        }
+
+        /* ================= ACTION ================= */
+
+        .view-btn {
+            border: 1px solid #6c63ff;
+            background: white;
+            color: #6c63ff;
+            padding: 7px 12px;
+            border-radius: 7px;
+            cursor: pointer;
+            font-size: 11px;
+        }
+
+        .view-btn:hover {
+            background: #6c63ff;
+            color: white;
+        }
+
+        /* ================= EMPTY ================= */
+
+        .empty-state {
+            text-align: center;
+            padding: 50px 20px;
+            display: none;
+        }
+
+        .empty-state i {
+            font-size: 45px;
+            color: #d4d2f8;
+            margin-bottom: 15px;
+        }
+
+        .empty-state h3 {
+            font-size: 17px;
+            margin-bottom: 7px;
+        }
+
+        .empty-state p {
+            color: #888;
+            font-size: 12px;
+        }
+
+        /* ================= RESPONSIVE ================= */
+
+        @media (max-width: 850px) {
+
+            .upcoming-card {
+                grid-template-columns: 70px 1fr;
+            }
+
+            .booking-meta {
+                grid-column: 2;
+                text-align: left;
+            }
+
+            .booking-row {
+                grid-template-columns: 1.5fr 1fr 1fr;
+                gap: 12px;
+            }
+
+            .table-heading {
+                display: none;
+            }
+
+            .booking-row .action {
+                grid-column: 3;
+            }
+
+        }
+
+        @media (max-width: 600px) {
+
+            nav {
+                padding: 0 5%;
+            }
+
+            .nav-links {
+                gap: 10px;
+            }
+
+            .nav-links a:not(.profile-btn) {
+                display: none;
+            }
+
+            .page {
+                padding: 30px 5%;
+            }
+
+            .page-header {
+                align-items: flex-start;
+                flex-direction: column;
+                gap: 18px;
+            }
+
+            .upcoming-card {
+                grid-template-columns: 1fr;
+            }
+
+            .booking-meta {
+                grid-column: auto;
+            }
+
+            .booking-row {
+                grid-template-columns: 1fr 1fr;
+            }
+
+            .booking-row .action {
+                grid-column: 2;
+            }
+
+        }
+
+    </style>
+</head>
+
+<body>
+
+<!-- ================= NAVBAR ================= -->
+
+<nav>
+
+    <a href="index.html" class="logo">
+        <i class="fa-solid fa-scissors"></i>
+        SalonEase
+    </a>
+
+    <div class="nav-links">
+
+        <a href="dashboard.html">
+            Dashboard
+        </a>
+
+        <a href="services.html">
+            Services
+        </a>
+
+        <a href="bookings.html" class="active">
+            My Bookings
+        </a>
+
+        <a href="profile.html" class="profile-btn">
+            <i class="fa-solid fa-user"></i>
+            Profile
+        </a>
+
+    </div>
+
+</nav>
+
+
+<!-- ================= PAGE ================= -->
+
+<div class="page">
+
+    <!-- HEADER -->
+
+    <div class="page-header">
+
+        <div>
+
+            <h1>My Bookings</h1>
+
+            <p>
+                Manage your appointments and view your booking history.
+            </p>
+
+        </div>
+
+        <a href="services.html" class="new-booking-btn">
+
+            <i class="fa-solid fa-plus"></i>
+            New Booking
+
+        </a>
+
+    </div>
+
+
+<!-- ================= UPCOMING ================= -->
+
+<div class="section">
+
+    <div class="section-header">
+
+        <h2>
+            Upcoming Appointment
+        </h2>
+
+        <span id="upcomingCount">
+            0 upcoming appointments
+        </span>
+
+    </div>
+
+    <div id="upcomingContainer">
+
+        <div style="
+            background:white;
+            border-radius:16px;
+            padding:40px;
+            text-align:center;
+            color:#777;
+        ">
+            <i class="fa-solid fa-spinner fa-spin"></i>
+            Loading appointments...
+        </div>
+
+    </div>
+
+</div>
+
+   <!-- ================= HISTORY ================= -->
+
+<div class="section">
+
+    <div class="section-header">
+
+        <h2>
+            Booking History
+        </h2>
+
+        <span id="historyCount">
+            0 bookings
+        </span>
+
+    </div>
+
+
+    <div class="history-card">
+
+        <!-- TABLE HEADER -->
+
+        <div class="booking-row table-heading">
+
+            <div>
+                Service
+            </div>
+
+            <div>
+                Date
+            </div>
+
+            <div>
+                Stylist
+            </div>
+
+            <div>
+                Amount
+            </div>
+
+            <div>
+                Status
+            </div>
+
+        </div>
+
+
+        <div id="historyContainer">
+
+            <div style="
+                padding:40px;
+                text-align:center;
+                color:#777;
+            ">
+                <i class="fa-solid fa-spinner fa-spin"></i>
+                Loading bookings...
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<script>
+
+document.addEventListener("DOMContentLoaded", async function () {
+
+    // ================= GET LOGGED-IN CUSTOMER =================
+
+    const customerData = localStorage.getItem("customer");
+
+    if (!customerData) {
+        alert("Please login to view your bookings.");
+        window.location.href = "login.html";
+        return;
+    }
+
+    const customer = JSON.parse(customerData);
+
+    // Customer object from login uses "id"
+    const customerId = customer.id;
+
+
+    // ================= GET HTML CONTAINERS =================
+
+    const upcomingContainer =
+        document.getElementById("upcomingContainer");
+
+    const historyContainer =
+        document.getElementById("historyContainer");
+
+    const upcomingCount =
+        document.getElementById("upcomingCount");
+
+    const historyCount =
+        document.getElementById("historyCount");
+
+
+    // ================= FORMAT DATE =================
+
+    function formatDate(dateValue) {
+
+        const dateString =
+            String(dateValue).substring(0, 10);
+
+        const parts =
+            dateString.split("-");
+
+        const year =
+            Number(parts[0]);
+
+        const month =
+            Number(parts[1]);
+
+        const day =
+            Number(parts[2]);
+
+        const date =
+            new Date(year, month - 1, day);
+
+        return date.toLocaleDateString("en-IN", {
+            day: "2-digit",
+            month: "short",
+            year: "numeric"
+        });
+    }
+
+
+    // ================= FORMAT TIME =================
+
+    function formatTime(timeValue) {
+
+        const parts =
+            String(timeValue)
+                .substring(0, 5)
+                .split(":");
+
+        const hours =
+            Number(parts[0]);
+
+        const minutes =
+            Number(parts[1]);
+
+        const date =
+            new Date();
+
+        date.setHours(
+            hours,
+            minutes,
+            0,
+            0
+        );
+
+        return date.toLocaleTimeString("en-IN", {
+            hour: "2-digit",
+            minute: "2-digit",
+            hour12: true
+        });
+    }
+
+
+    // ================= GET APPOINTMENT DATETIME =================
+
+    function getAppointmentDateTime(appointment) {
+
+        // PostgreSQL DATE may arrive as:
+        // 2026-10-14T18:30:00.000Z
+
+        const dateString =
+            String(appointment.appointment_date)
+                .substring(0, 10);
+
+        const timeString =
+            String(appointment.appointment_time)
+                .substring(0, 5);
+
+        const dateParts =
+            dateString.split("-");
+
+        const timeParts =
+            timeString.split(":");
+
+        const year =
+            Number(dateParts[0]);
+
+        const month =
+            Number(dateParts[1]) - 1;
+
+        const day =
+            Number(dateParts[2]);
+
+        const hours =
+            Number(timeParts[0]);
+
+        const minutes =
+            Number(timeParts[1]);
+
+        return new Date(
+            year,
+            month,
+            day,
+            hours,
+            minutes,
+            0,
+            0
+        );
+    }
+
+
+    // ================= STATUS CLASS =================
+
+    function getStatusClass(status) {
+
+        const value =
+            String(status).toLowerCase();
+
+        if (value === "confirmed") {
+            return "confirmed";
+        }
+
+        if (value === "completed") {
+            return "completed";
+        }
+
+        if (value === "cancelled") {
+            return "cancelled";
+        }
+
+        return "pending";
+    }
+
+
+    // ================= LOAD APPOINTMENTS =================
+
+    try {
+
+        const response =
+            await fetch(
+                `/api/appointments/customer/${customerId}`
+            );
+
+        const data =
+            await response.json();
+
+
+        // ================= API ERROR =================
+
+        if (!data.success) {
+
+            upcomingContainer.innerHTML = `
+                <div class="empty-state">
+
+                    <i class="fa-solid fa-triangle-exclamation"></i>
+
+                    <h3>Unable to load appointments</h3>
+
+                    <p>
+                        ${data.message || "Something went wrong."}
+                    </p>
+
+                </div>
+            `;
+
+            historyContainer.innerHTML = `
+                <div class="empty-state">
+
+                    <i class="fa-solid fa-triangle-exclamation"></i>
+
+                    <h3>Unable to load booking history</h3>
+
+                    <p>
+                        ${data.message || "Something went wrong."}
+                    </p>
+
+                </div>
+            `;
+
+            return;
+        }
+
+
+        const appointments =
+            Array.isArray(data.appointments)
+                ? data.appointments
+                : [];
+
+
+        console.log(
+            "SalonEase appointments:",
+            appointments
+        );
+
+
+        // ================= CURRENT DATE/TIME =================
+
+        const now =
+            new Date();
+
+
+        // ================= SEPARATE UPCOMING / HISTORY =================
+
+        const upcoming =
+            appointments.filter(function (appointment) {
+
+                const appointmentDateTime =
+                    getAppointmentDateTime(appointment);
+
+                const status =
+                    String(appointment.status)
+                        .toLowerCase();
+
+                return (
+                    appointmentDateTime >= now &&
+                    status !== "completed" &&
+                    status !== "cancelled"
+                );
+
+            });
+
+
+        const history =
+            appointments.filter(function (appointment) {
+
+                return !upcoming.includes(appointment);
+
+            });
+
+
+        // ================= SORT UPCOMING =================
+
+        upcoming.sort(function (a, b) {
+
+            return (
+                getAppointmentDateTime(a) -
+                getAppointmentDateTime(b)
+            );
+
+        });
+
+
+        // ================= SORT HISTORY =================
+
+        history.sort(function (a, b) {
+
+            return (
+                getAppointmentDateTime(b) -
+                getAppointmentDateTime(a)
+            );
+
+        });
+
+
+        // ================= COUNTS =================
+
+        upcomingCount.textContent =
+            `${upcoming.length} upcoming appointment${upcoming.length !== 1 ? "s" : ""}`;
+
+        historyCount.textContent =
+            `${history.length} booking${history.length !== 1 ? "s" : ""}`;
+
+
+        // ================= UPCOMING =================
+
+        if (upcoming.length === 0) {
+
+            upcomingContainer.innerHTML = `
+
+                <div class="empty-state">
+
+                    <i class="fa-regular fa-calendar-xmark"></i>
+
+                    <h3>
+                        No upcoming appointments
+                    </h3>
+
+                    <p>
+                        You don't have any upcoming bookings.
+                    </p>
+
+                    <a
+                        href="services.html"
+                        class="btn"
+                    >
+                        Book an Appointment
+                    </a>
+
+                </div>
+
+            `;
+
+        } else {
+
+            upcomingContainer.innerHTML =
+                upcoming.map(function (appointment) {
+
+                    const dateString =
+                        String(
+                            appointment.appointment_date
+                        ).substring(0, 10);
+
+                    const dateParts =
+                        dateString.split("-");
+
+                    const year =
+                        Number(dateParts[0]);
+
+                    const monthNumber =
+                        Number(dateParts[1]);
+
+                    const dayNumber =
+                        Number(dateParts[2]);
+
+
+                    const date =
+                        new Date(
+                            year,
+                            monthNumber - 1,
+                            dayNumber
+                        );
+
+
+                    const month =
+                        date
+                            .toLocaleDateString(
+                                "en-IN",
+                                {
+                                    month: "short"
+                                }
+                            )
+                            .toUpperCase();
+
+
+                    const day =
+                        date
+                            .getDate()
+                            .toString()
+                            .padStart(2, "0");
+
+
+                    return `
+
+                        <div class="upcoming-card">
+
+                            <div class="date-box">
+
+                                <div class="month">
+                                    ${month}
+                                </div>
+
+                                <div class="day">
+                                    ${day}
+                                </div>
+
+                            </div>
+
+
+                            <div class="booking-info">
+
+                                <h3>
+                                    ${appointment.service_name}
+                                </h3>
+
+
+                                <p>
+
+                                    <i class="fa-solid fa-user"></i>
+
+                                    ${appointment.employee_name}
+
+                                    — ${appointment.specialization}
+
+                                </p>
+
+
+                                <p>
+
+                                    <i class="fa-solid fa-calendar"></i>
+
+                                    ${formatDate(
+                                        appointment.appointment_date
+                                    )}
+
+                                </p>
+
+
+                                <p>
+
+                                    <i class="fa-solid fa-clock"></i>
+
+                                    ${formatTime(
+                                        appointment.appointment_time
+                                    )}
+
+                                    · ${appointment.duration} minutes
+
+                                </p>
+
+                            </div>
+
+
+                            <div class="booking-meta">
+
+                                <span
+                                    class="status ${getStatusClass(
+                                        appointment.status
+                                    )}"
+                                >
+
+                                    ${appointment.status}
+
+                                </span>
+
+
+                                <div class="amount">
+
+                                    ₹${Number(
+                                        appointment.amount
+                                    ).toFixed(0)}
+
+                                </div>
+
+
+                                <div class="booking-id">
+
+                                    Appointment #${appointment.appointment_id}
+
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                    `;
+
+                }).join("");
+
+        }
+
+
+        // ================= HISTORY =================
+
+        if (history.length === 0) {
+
+            historyContainer.innerHTML = `
+
+                <div class="empty-state">
+
+                    <i class="fa-regular fa-calendar"></i>
+
+                    <h3>
+                        No booking history
+                    </h3>
+
+                    <p>
+                        Your completed bookings will appear here.
+                    </p>
+
+                </div>
+
+            `;
+
+        } else {
+
+            historyContainer.innerHTML =
+                history.map(function (appointment) {
+
+                    const status =
+                        String(appointment.status)
+                            .toLowerCase();
+
+
+                    // Show feedback button ONLY for Completed
+                    const feedbackButton =
+                        status === "completed"
+                            ? `
+
+                                <a
+                                    href="feedback.html?appointment=${appointment.appointment_id}"
+                                    style="
+                                        display:inline-block;
+                                        margin-top:8px;
+                                        padding:6px 12px;
+                                        background:#6C63FF;
+                                        color:white;
+                                        border-radius:6px;
+                                        text-decoration:none;
+                                        font-size:12px;
+                                    "
+                                >
+
+                                    <i class="fa-solid fa-star"></i>
+
+                                    Give Feedback
+
+                                </a>
+
+                              `
+                            : "";
+
+
+                    return `
+
+                        <div class="booking-row">
+
+
+                            <div class="service-name">
+
+                                <strong>
+                                    ${appointment.service_name}
+                                </strong>
+
+                                <span class="row-text">
+                                    ${appointment.duration} min
+                                </span>
+
+                            </div>
+
+
+                            <div class="row-text">
+
+                                ${formatDate(
+                                    appointment.appointment_date
+                                )}
+
+                                <br>
+
+                                ${formatTime(
+                                    appointment.appointment_time
+                                )}
+
+                            </div>
+
+
+                            <div class="row-text">
+
+                                ${appointment.employee_name}
+
+                            </div>
+
+
+                            <div class="row-amount">
+
+                                ₹${Number(
+                                    appointment.amount
+                                ).toFixed(0)}
+
+                            </div>
+
+
+                            <div>
+
+                                <span
+                                    class="status ${getStatusClass(
+                                        appointment.status
+                                    )}"
+                                >
+
+                                    ${appointment.status}
+
+                                </span>
+
+
+                                ${feedbackButton}
+
+                            </div>
+
+
+                        </div>
+
+                    `;
+
+                }).join("");
+
+        }
+
+
+    } catch (error) {
+
+        console.error(
+            "Booking loading error:",
+            error
+        );
+
+
+        upcomingContainer.innerHTML = `
+
+            <div class="empty-state">
+
+                <i class="fa-solid fa-triangle-exclamation"></i>
+
+                <h3>
+                    Unable to load appointments
+                </h3>
+
+                <p>
+                    Unable to connect to the SalonEase server.
+                </p>
+
+            </div>
+
+        `;
+
+
+        historyContainer.innerHTML = `
+
+            <div class="empty-state">
+
+                <i class="fa-solid fa-triangle-exclamation"></i>
+
+                <h3>
+                    Unable to load booking history
+                </h3>
+
+                <p>
+                    Unable to connect to the SalonEase server.
+                </p>
+
+            </div>
+
+        `;
+
+    }
+
+});
+
+</script>
+</body>
+</html>
